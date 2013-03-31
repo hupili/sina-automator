@@ -83,6 +83,16 @@ class RateLimitQueue(object):
     def clear_tasks(self):
         self._tasks = []
 
+    def get_buckets_info(self):
+        ret = {}
+        for (name, bucket) in self._buckets.items():
+            ret[name] = {}
+            ret[name]['max'] = bucket.capacity
+            ret[name]['current'] = bucket.tokens
+            ret[name]['rate'] = bucket.fill_rate
+        return ret
+
+
 class RLQTask(object):
     """docstring for RLQTask"""
     def __init__(self, func, args, kwargs, buckets, callback=None):
