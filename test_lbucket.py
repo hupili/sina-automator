@@ -37,6 +37,9 @@ def test_rlq_task():
     # Test callback
     t = RLQTask(_add_two_num, [], {'b': 5, 'a': 9}, {}, lambda x: sys.stdout.write("result = %s\n" % x))
     print t.execute()
+    # Test Exception
+    t = RLQTask(lambda: 1/0, [], {}, {}, lambda x: sys.stdout.write("result = %s\n" % x))
+    print t.execute()
 
 def _get_print_task(msg):
     return RLQTask(lambda: sys.stdout.write(msg + '\n'), [], {}, {}, None)
@@ -76,8 +79,8 @@ def test_rlq2():
 
 if __name__ == '__main__':
     #test_bucket()
-    #test_rlq_task()
+    test_rlq_task()
     #test_rlq1()
     #test_rlq2()
-    test_rql3()
+    #test_rql3()
 
