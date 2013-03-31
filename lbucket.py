@@ -116,11 +116,40 @@ class RLQTask(object):
             return ret
 
 def rate_limit(attr_rlq='rlq', buckets={}, callback=None):
+    '''Decorate a rate limited function with callback function.
+    It can only be used to decorate an object method and the object should
+    have a RateLimitQueue field indicated by the name ``attr_rlq``.
+
+    Note:
+
+       * ``getattr(self, attr_rlq)`` should return a 
+         RateLimitQueue object.
+       * As a side effect, a ``callback`` kwarg will be added
+         to the decorated function.
+
+    :type attr_rlq: str
+    :type buckets: dict
+
+    :param attr_rlq: 
+        The field name of RateLimitQueue
+
+    :param buckets: 
+        Specify how much resource the decorated function consumes at each invokation
+
+    :param callback:
+        Specify the default callback function for this decorated method. 
+        It can be overrided by ``callback`` kwarg when calling the decorated method.
+    '''
     def wrapper_rate_limit(func):
         def wrapped_func(self, *args, **kwargs):
+            if 'callback' in kwargs:
+                _cb = kwargs['callback']
+                del kwargs['callback']
+            else:
+                _cb = callback
             import copy
             q = getattr(self, attr_rlq)
-            t = RLQTask(func, (self, ) + args, kwargs, copy.deepcopy(buckets), callback)
+            t = RLQTask(func, (self, ) + args, kwargs, copy.deepcopy(buckets), _cb)
             q.add_task(t)
             return None
         return wrapped_func

@@ -128,11 +128,21 @@ def test_rlq_rate_limit2():
     print 'RLQ run'
     print c.rlq.run()
 
+def test_rlq_rate_limit3():
+    c = RateLimitedClass()
+    c.cal(1, 2, callback=lambda x: sys.stdout.write("Invoke 1, ret=%s\n" % x))
+    c.cal(3, 2, callback=lambda x: sys.stdout.write("Invoke 2, ret=%s\n" % x))
+    c.cal(3, 9, callback=lambda x: sys.stdout.write("Invoke 3, ret=%s\n" % x))
+    c.rlq.run()
+    sleep(2)
+    c.rlq.run()
+
 if __name__ == '__main__':
     #test_bucket()
     #test_rlq_task()
     #test_rlq1()
     #test_rlq2()
     #test_rlq_rate_limit()
-    test_rlq_rate_limit2()
+    #test_rlq_rate_limit2()
+    test_rlq_rate_limit3()
 
