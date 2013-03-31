@@ -85,11 +85,14 @@ class RateLimitedClass(object):
         self.rlq.add_bucket('quota', LeakyBucket(10, 3, 2))
         self.count = 0
     
-    #@rate_limit(buckets={'quota': 2}, callback=lambda x: sys.stdout.write('ret=%s\n', x))
     @rate_limit(buckets={'quota': 2}) 
     def do(self):
         self.count += 1
         print "I'm doing: %s" % self.count
+
+    @rate_limit(buckets={'quota': 2}, callback=lambda x: sys.stdout.write('ret=%s\n' % x))
+    def cal(self, a, b):
+        return _add_two_num(a, b)
 
 def test_rlq_rate_limit():
     c = RateLimitedClass()
@@ -109,11 +112,27 @@ def test_rlq_rate_limit():
     print 'RLQ run'
     print c.rlq.run()
 
+def test_rlq_rate_limit2():
+    c = RateLimitedClass()
+    c.cal(1, 2)
+    c.cal(3, 2)
+    c.cal(3, 9)
+    print c.rlq.get_buckets_info()
+    print 'RLQ run'
+    print c.rlq.run()
+    print c.rlq.get_buckets_info()
+    print 'RLQ run'
+    print c.rlq.run()
+    print 'Sleep 2'
+    sleep(2)
+    print 'RLQ run'
+    print c.rlq.run()
+
 if __name__ == '__main__':
     #test_bucket()
     #test_rlq_task()
     #test_rlq1()
     #test_rlq2()
-
-    test_rlq_rate_limit()
+    #test_rlq_rate_limit()
+    test_rlq_rate_limit2()
 
