@@ -55,10 +55,20 @@ class WeiboAutomator(object):
         tokens_init = upperbound * 0.1
         return LeakyBucket(tokens_max, tokens_init, fill_rate)
 
+    def run(self):
+        return self.rlq.run()
+
+
     def follow(self, uid):
         ret = self.weibo.weibo_request('friendships/create',
                 'POST',
                 {'uid': uid})
+        return ret
+
+    def follow_by_name(self, screen_name):
+        ret = self.weibo.weibo_request('friendships/create',
+                'POST',
+                {'screen_name': screen_name})
         return ret
 
     def home_timeline(self, count=20):
@@ -76,6 +86,22 @@ class WeiboAutomator(object):
 
     def forward(self, status, text):
         return self.weibo.forward(status, text)
+
+    def domain_show(self, url):
+        '''Lookup user by personal url. 
+        We will match and remove common weibo prefix. 
+
+        :param url:
+            e.g. 'http://weibo.com/xiena' --> url='xiena'
+        '''
+        import re
+        pattern = re.compile('^http:\/\/(www\.)?weibo.com\/')
+        url = re.sub(pattern, '', url)
+        ret = self.weibo.weibo_request('users/domain_show',
+                'GET',
+                {'domain': url})
+        return ret
+
 
 if __name__ == '__main__':
     from time import sleep
