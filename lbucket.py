@@ -115,5 +115,13 @@ class RLQTask(object):
         else:
             return ret
 
-def rate_limit(func):
-    pass
+def rate_limit(attr_rlq='rlq', buckets={}, callback=None):
+    def wrapper_rate_limit(func):
+        def wrapped_func(self, *args, **kwargs):
+            import copy
+            q = getattr(self, attr_rlq)
+            t = RLQTask(func, (self, ) + args, kwargs, copy.deepcopy(buckets), callback)
+            q.add_task(t)
+            return None
+        return wrapped_func
+    return wrapper_rate_limit

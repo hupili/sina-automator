@@ -77,10 +77,43 @@ def test_rlq2():
     print "q.run()"
     q.run()
 
+class RateLimitedClass(object):
+    """docstring for RateLimitedClass"""
+    def __init__(self):
+        super(RateLimitedClass, self).__init__()
+        self.rlq = RateLimitQueue()
+        self.rlq.add_bucket('quota', LeakyBucket(10, 3, 2))
+        self.count = 0
+    
+    #@rate_limit(buckets={'quota': 2}, callback=lambda x: sys.stdout.write('ret=%s\n', x))
+    @rate_limit(buckets={'quota': 2}) 
+    def do(self):
+        self.count += 1
+        print "I'm doing: %s" % self.count
+
+def test_rlq_rate_limit():
+    c = RateLimitedClass()
+    c.do()
+    c.do()
+    c.do()
+    print c.rlq.get_buckets_info()
+    #print c.rlq._buckets
+    #print c.rlq._tasks
+    print 'RLQ run'
+    print c.rlq.run()
+    print c.rlq.get_buckets_info()
+    print 'RLQ run'
+    print c.rlq.run()
+    print 'Sleep 2'
+    sleep(2)
+    print 'RLQ run'
+    print c.rlq.run()
+
 if __name__ == '__main__':
     #test_bucket()
-    test_rlq_task()
+    #test_rlq_task()
     #test_rlq1()
     #test_rlq2()
-    #test_rql3()
+
+    test_rlq_rate_limit()
 
