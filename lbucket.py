@@ -7,6 +7,8 @@ Leaky Bucket Suite:
    * Decorator to limit rate of any function
 '''
 
+import cPickle as pickle
+
 class LeakyBucket(object):
     """Single Leaky Bucket
 
@@ -47,13 +49,13 @@ class LeakyBucket(object):
         return self._tokens
 
     tokens = property(get_tokens)
-        
+
 class RateLimitQueue(object):
     """docstring for RateLimitQueue"""
     def __init__(self):
         super(RateLimitQueue, self).__init__()
         self._buckets = {}
-        self._queue = []
+        self._tasks = []
 
     def add_bucket(self, name, bucket):
         '''
@@ -67,6 +69,18 @@ class RateLimitQueue(object):
         :type task: RLQTask
         '''
         self._tasks.append(task)
+
+    def run(self):
+        _new_tasks = []
+        for t in self._tasks:
+            for (b, q) in t.buckets.items():
+                if self._buckets[b].consume(q):
+                    del t.buckets[b]
+            if len(t.buckets) == 0:
+                ret = t.execute()
+            else:
+                _new_tasks.append(t)
+        self._tasks = _new_tasks
 
 class RLQTask(object):
     """docstring for RLQTask"""
