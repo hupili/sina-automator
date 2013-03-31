@@ -142,12 +142,14 @@ def rate_limit(attr_rlq='rlq', buckets={}, callback=None):
     '''
     def wrapper_rate_limit(func):
         def wrapped_func(self, *args, **kwargs):
-            if 'callback' in kwargs:
+            import copy
+            import inspect
+            
+            if 'callback' in kwargs and not 'callback' in inspect.getargspec(func).args:
                 _cb = kwargs['callback']
                 del kwargs['callback']
             else:
                 _cb = callback
-            import copy
             q = getattr(self, attr_rlq)
             t = RLQTask(func, (self, ) + args, kwargs, copy.deepcopy(buckets), _cb)
             q.add_task(t)

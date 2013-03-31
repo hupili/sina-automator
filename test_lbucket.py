@@ -94,14 +94,17 @@ class RateLimitedClass(object):
     def cal(self, a, b):
         return _add_two_num(a, b)
 
+    @rate_limit(buckets={'quota': 1}, callback=lambda x: sys.stdout.write('ret=%s\n' % x))
+    def func_with_callback_param(self, callback):
+        print "Inside 'func_with_callback_param'. callback='%s'" % callback
+
 def test_rlq_rate_limit():
+    # Basic rate_limit decorator test
     c = RateLimitedClass()
     c.do()
     c.do()
     c.do()
     print c.rlq.get_buckets_info()
-    #print c.rlq._buckets
-    #print c.rlq._tasks
     print 'RLQ run'
     print c.rlq.run()
     print c.rlq.get_buckets_info()
@@ -113,6 +116,7 @@ def test_rlq_rate_limit():
     print c.rlq.run()
 
 def test_rlq_rate_limit2():
+    # rate_limit decorator test with callback
     c = RateLimitedClass()
     c.cal(1, 2)
     c.cal(3, 2)
@@ -129,6 +133,7 @@ def test_rlq_rate_limit2():
     print c.rlq.run()
 
 def test_rlq_rate_limit3():
+    # rate_limit: test client side callback function
     c = RateLimitedClass()
     c.cal(1, 2, callback=lambda x: sys.stdout.write("Invoke 1, ret=%s\n" % x))
     c.cal(3, 2, callback=lambda x: sys.stdout.write("Invoke 2, ret=%s\n" % x))
@@ -137,6 +142,13 @@ def test_rlq_rate_limit3():
     sleep(2)
     c.rlq.run()
 
+def test_rlq_rate_limit4():
+    # rate_limit: when decorated function has 'callback' param
+    c = RateLimitedClass()
+    c.func_with_callback_param(callback='hello')
+    c.rlq.run()
+
+
 if __name__ == '__main__':
     #test_bucket()
     #test_rlq_task()
@@ -144,5 +156,6 @@ if __name__ == '__main__':
     #test_rlq2()
     #test_rlq_rate_limit()
     #test_rlq_rate_limit2()
-    test_rlq_rate_limit3()
+    #test_rlq_rate_limit3()
+    test_rlq_rate_limit4()
 
