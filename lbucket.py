@@ -50,9 +50,45 @@ class LeakyBucket(object):
         
 class RateLimitQueue(object):
     """docstring for RateLimitQueue"""
-    def __init__(self, arg):
+    def __init__(self):
         super(RateLimitQueue, self).__init__()
-        self.arg = arg
-        
+        self._buckets = {}
+        self._queue = []
+
+    def add_bucket(self, name, bucket):
+        '''
+        :type name: str
+        :type bucket: LeakyBucket
+        '''
+        self._buckets[name] = bucket
+
+    def add_task(self, task):
+        '''
+        :type task: RLQTask
+        '''
+        self._tasks.append(task)
+
+class RLQTask(object):
+    """docstring for RLQTask"""
+    def __init__(self, func, args, kwargs, buckets, callback=None):
+        super(RLQTask, self).__init__()
+        self.func = func
+        self.args = args 
+        self.kwargs = kwargs
+        self.buckets = buckets
+        self.callback = callback
+
+    def execute(self):
+        ret = None
+        try:
+            ret = self.func(*self.args, **self.kwargs)
+        except Exception as e:
+            ret = e
+        if self.callback:
+            fn = getattr(self, 'callback')
+            return fn(ret)
+        else:
+            return ret
+
 def rate_limit(func):
     pass
