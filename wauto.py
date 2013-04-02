@@ -9,6 +9,18 @@ from snsapi.snspocket import SNSPocket
 from snsapi.snslog import SNSLog as logger
 from lbucket import *
 
+''' 
+Make the invokation from Python interpreter more convenient. 
+Use synchronous calls. 
+'''
+def _dummy_decorator_generator(*args, **kwargs):
+    def _dummy_decorator(func):
+        return func
+    return _dummy_decorator
+
+if __name__ == '__main__':
+    rate_limit = _dummy_decorator_generator
+
 
 def cal_bucket(upperbound, period):
     '''
@@ -79,6 +91,9 @@ class WeiboAutomator(object):
     def run(self):
         return self.rlq.run()
 
+    def clear(self):
+        return self.rlq.clear()
+
     @rate_limit(buckets=POLICY_GROUP['follow'], callback=_log)
     def follow(self, uid):
         ret = self.weibo.weibo_request('friendships/create',
@@ -129,12 +144,85 @@ class WeiboAutomator(object):
                 {'domain': url})
         return ret
 
+    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
+    def get_friends(self, uid=None, screen_name=None, count=200, cursor=None):
+        params = {'count': count}
+        if not uid is None:
+            params['uid'] = uid
+        else:
+            params['screen_name'] = screen_name
+        if not cursor is None:
+            params['cursor'] = cursor
+        ret = self.weibo.weibo_request('friendships/friends',
+                'GET',
+                params)
+        return ret
 
+    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
+    def get_friends_ids(self, uid=None, screen_name=None, count=5000, cursor=None):
+        params = {'count': count}
+        if not uid is None:
+            params['uid'] = uid
+        else:
+            params['screen_name'] = screen_name
+        if not cursor is None:
+            params['cursor'] = cursor
+        ret = self.weibo.weibo_request('friendships/friends/ids',
+                'GET',
+                params)
+        return ret
+
+    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
+    def get_followers(self, uid=None, screen_name=None, count=200, cursor=None):
+        params = {'count': count}
+        if not uid is None:
+            params['uid'] = uid
+        else:
+            params['screen_name'] = screen_name
+        if not cursor is None:
+            params['cursor'] = cursor
+        ret = self.weibo.weibo_request('friendships/followers',
+                'GET',
+                params)
+        return ret
+
+    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
+    def get_followers_ids(self, uid=None, screen_name=None, count=5000, cursor=None):
+        params = {'count': count}
+        if not uid is None:
+            params['uid'] = uid
+        else:
+            params['screen_name'] = screen_name
+        if not cursor is None:
+            params['cursor'] = cursor
+        ret = self.weibo.weibo_request('friendships/followers/ids',
+                'GET',
+                params)
+        return ret
+
+    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
+    def get_followers_active(self, uid=None, screen_name=None, count=200, cursor=None):
+        params = {'count': count}
+        if not uid is None:
+            params['uid'] = uid
+        else:
+            params['screen_name'] = screen_name
+        if not cursor is None:
+            params['cursor'] = cursor
+        ret = self.weibo.weibo_request('friendships/followers/active',
+                'GET',
+                params)
+        return ret
+    
 if __name__ == '__main__':
-    from time import sleep
-    import pprint
-    pp = pprint.PrettyPrinter(indent=4)
     wa = WeiboAutomator()
-    pp.pprint(wa.rlq.get_buckets_info())
-    sleep(0.6)
-    pp.pprint(wa.rlq.get_buckets_info())
+
+# Previous tests to check the rate limit rules. 
+#if __name__ == '__main__':
+#    from time import sleep
+#    import pprint
+#    pp = pprint.PrettyPrinter(indent=4)
+#    wa = WeiboAutomator()
+#    pp.pprint(wa.rlq.get_buckets_info())
+#    sleep(0.6)
+#    pp.pprint(wa.rlq.get_buckets_info())
