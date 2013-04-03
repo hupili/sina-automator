@@ -5,10 +5,13 @@ from tendo import singleton
 me = singleton.SingleInstance() # will sys.exit(-1) if other instance is running
 
 from wauto import WeiboAutomator
+wa = WeiboAutomator()
+
+from queue import Queue
+q = Queue('message.db')
+q.connect()
 
 FN_WORKSPACE = 'workingspace.pickle'
-
-wa = WeiboAutomator()
 
 def _load():
     try:
