@@ -9,6 +9,8 @@ from snsapi.snspocket import SNSPocket
 from snsapi.snslog import SNSLog as logger
 from lbucket import *
 
+import cPickle as pickle
+
 ''' 
 Make the invokation from Python interpreter more convenient. 
 Use synchronous calls. 
@@ -87,6 +89,12 @@ class WeiboAutomator(object):
 
         self.rlq = RateLimitQueue() 
         map(lambda t: self.rlq.add_bucket(t[0], t[1]), self.SINA_BUCKETS)
+
+    def dumps(self):
+        return pickle.dumps(self.rlq)
+
+    def loads(self, s):
+        self.rlq = pickle.loads(s)
 
     def run(self):
         return self.rlq.run()
