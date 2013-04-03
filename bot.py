@@ -27,5 +27,7 @@ atexit.register(_save)
 
 if __name__ == '__main__':
     from time import sleep
-    #sleep(20)
-    pass
+    import pprint
+    wa.run()
+    print "Left tasks:", len(wa.rlq._tasks)
+    pprint.pprint(wa.rlq.get_buckets_info())

@@ -56,7 +56,7 @@ class WeiboAutomator(object):
     # Ref:
     #    * [1] http://open.weibo.com/wiki/Rate-limiting
     SINA_BUCKETS = [
-            ('wauto_snsapi', LeakyBucket(1, 1, 1)),
+            ('wauto_snsapi', LeakyBucket(1, 0, 0.5)),
             ('ip.hour.test_auth', cal_bucket(1000, 60*60)),
             ('user.hour.test_auth.total', cal_bucket(150, 60*60)),
             ('user.hour.test_auth.update', cal_bucket(30, 60*60)),
@@ -97,31 +97,31 @@ class WeiboAutomator(object):
             # First arg should be 'self' if do not operate our RLQ directly. 
             t.args = list(t.args)
             t.args.pop(0)
-            # Only store the member function name
-            t.func = t.func.__name__
+            t.func = marshal.dumps(t.func.func_code)
             t.callback = marshal.dumps(t.callback.func_code)
         return pickle.dumps(r)
 
     def loads(self, s):
         r = pickle.loads(s)
-        self.rlq._buckets = r._buckets
         for t in r._tasks:
-            code = marshal.loads(t.callback)
-            t.callback = types.FunctionType(code, globals())
             t.args.insert(0, self)
             t.args = tuple(t.args)
-            t.kwargs['callback'] = t.callback
-            f = getattr(WeiboAutomator, t.func)
-            # Execute the wrapped class method again to insert task
-            f(*t.args, **t.kwargs)
+            code_func = marshal.loads(t.func)
+            t.func = types.FunctionType(code_func, globals())
+            code_callback = marshal.loads(t.callback)
+            t.callback = types.FunctionType(code_callback, globals())
+        self.rlq = r
 
+        #self.rlq._buckets = r._buckets
         #for t in r._tasks:
-        #    t.args.insert(0, self)
-        #    t.args = tuple(t.args)
-        #    t.func = getattr(WeiboAutomator, t.func)
         #    code = marshal.loads(t.callback)
         #    t.callback = types.FunctionType(code, globals())
-        #self.rlq = r
+        #    t.args.insert(0, self)
+        #    t.args = tuple(t.args)
+        #    t.kwargs['callback'] = t.callback
+        #    f = getattr(WeiboAutomator, t.func)
+        #    # Execute the wrapped class method again to insert task
+        #    f(*t.args, **t.kwargs)
 
     def run(self):
         return self.rlq.run()
