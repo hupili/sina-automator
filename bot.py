@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+# http://stackoverflow.com/questions/380870/python-single-instance-of-program
+from tendo import singleton
+me = singleton.SingleInstance() # will sys.exit(-1) if other instance is running
+
 from wauto import WeiboAutomator
 
 FN_WORKSPACE = 'workingspace.pickle'
@@ -22,4 +26,6 @@ import atexit
 atexit.register(_save)
 
 if __name__ == '__main__':
+    from time import sleep
+    sleep(20)
     pass
