@@ -114,7 +114,12 @@ class RLQTask(object):
             ret = e
         if self.callback:
             fn = getattr(self, 'callback')
-            return fn(ret)
+            try:
+                return fn(ret)
+            except Exception as e:
+                # Ignore callback failures
+                print e
+                pass
         else:
             return ret
 
