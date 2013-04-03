@@ -115,6 +115,9 @@ class RLQTask(object):
         else:
             return ret
 
+
+from functools import wraps
+
 def rate_limit(attr_rlq='rlq', buckets={}, callback=None):
     '''Decorate a rate limited function with callback function.
     It can only be used to decorate an object method and the object should
@@ -141,6 +144,7 @@ def rate_limit(attr_rlq='rlq', buckets={}, callback=None):
         It can be overrided by ``callback`` kwarg when calling the decorated method.
     '''
     def wrapper_rate_limit(func):
+        @wraps(func)
         def wrapped_func(self, *args, **kwargs):
             import copy
             import inspect
