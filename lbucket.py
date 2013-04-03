@@ -71,10 +71,13 @@ class RateLimitQueue(object):
     def run(self):
         _new_tasks = []
         for t in self._tasks:
+            ok = True
             for (b, q) in t.buckets.items():
-                if self._buckets[b].consume(q):
-                    del t.buckets[b]
-            if len(t.buckets) == 0:
+                if self._buckets[b].tokens < q:
+                    ok = False
+                    break
+            if ok:
+                map(lambda x: self._buckets[x[0]].consume(x[1]), t.buckets.items())
                 ret = t.execute()
             else:
                 _new_tasks.append(t)
