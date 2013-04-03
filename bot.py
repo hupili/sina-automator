@@ -14,7 +14,7 @@ def _load():
     try:
         with open(FN_WORKSPACE) as fp:
             wa.loads(fp.read())
-    except:
+    except IOError:
         pass
 
 def _save():
@@ -27,5 +27,5 @@ atexit.register(_save)
 
 if __name__ == '__main__':
     from time import sleep
-    sleep(20)
+    #sleep(20)
     pass

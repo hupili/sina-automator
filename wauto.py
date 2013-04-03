@@ -3,13 +3,14 @@
 import sys
 sys.path.append('snsaspi')
 import copy
+import marshal
+import types
+import cPickle as pickle
 
 import snsapi
 from snsapi.snspocket import SNSPocket
 from snsapi.snslog import SNSLog as logger
 from lbucket import *
-
-import cPickle as pickle
 
 ''' 
 Make the invokation from Python interpreter more convenient. 
@@ -91,10 +92,36 @@ class WeiboAutomator(object):
         map(lambda t: self.rlq.add_bucket(t[0], t[1]), self.SINA_BUCKETS)
 
     def dumps(self):
-        return pickle.dumps(self.rlq)
+        r = copy.deepcopy(self.rlq)
+        for t in r._tasks:
+            # First arg should be 'self' if do not operate our RLQ directly. 
+            t.args = list(t.args)
+            t.args.pop(0)
+            # Only store the member function name
+            t.func = t.func.__name__
+            t.callback = marshal.dumps(t.callback.func_code)
+        return pickle.dumps(r)
 
     def loads(self, s):
-        self.rlq = pickle.loads(s)
+        r = pickle.loads(s)
+        self.rlq._buckets = r._buckets
+        for t in r._tasks:
+            code = marshal.loads(t.callback)
+            t.callback = types.FunctionType(code, globals())
+            t.args.insert(0, self)
+            t.args = tuple(t.args)
+            t.kwargs['callback'] = t.callback
+            f = getattr(WeiboAutomator, t.func)
+            # Execute the wrapped class method again to insert task
+            f(*t.args, **t.kwargs)
+
+        #for t in r._tasks:
+        #    t.args.insert(0, self)
+        #    t.args = tuple(t.args)
+        #    t.func = getattr(WeiboAutomator, t.func)
+        #    code = marshal.loads(t.callback)
+        #    t.callback = types.FunctionType(code, globals())
+        #self.rlq = r
 
     def run(self):
         return self.rlq.run()
