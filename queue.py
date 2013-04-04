@@ -188,7 +188,7 @@ class Queue(object):
     #def _home_timeline(self, channel):
     #    return self.sp.home_timeline(channel=channel)
 
-    def enqueue_from_timeline(self, ml):
+    def input(self, ml):
         count = 0 
         for m in ml:
             if self._inqueue(m):

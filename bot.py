@@ -4,25 +4,33 @@
 from tendo import singleton
 me = singleton.SingleInstance() # will sys.exit(-1) if other instance is running
 
+import dill
+
 from wauto import WeiboAutomator
-wa = WeiboAutomator()
-
 from queue import Queue
-q = Queue('message.db')
-q.connect()
 
-FN_WORKSPACE = 'workingspace.pickle'
+FN_WORKSPACE = 'workingspace.bin'
+
+def _input(x):
+    q.input(x)
 
 def _load():
+    global wa, q
     try:
         with open(FN_WORKSPACE) as fp:
-            wa.loads(fp.read())
+            _workspace = dill.loads(fp.read())
+            wa = _workspace['wa']
+            q = _workspace['q']
+            q.connect()
     except IOError:
-        pass
+        wa = WeiboAutomator()
+        q = Queue('message.db')
+        q.connect()
 
 def _save():
     with open(FN_WORKSPACE, 'w') as fp:
-        fp.write(wa.dumps())
+        _workspace = {'wa': wa, 'q': q}
+        fp.write(dill.dumps(_workspace))
 
 _load()
 import atexit
