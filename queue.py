@@ -228,6 +228,17 @@ class Queue(object):
 
         return message_list
 
+    def select_username(self, username):
+        condition = "username LIKE '%" + username + "%'"
+        return self.select(condition)
+
+    def select_text(self, text):
+        '''
+        Select messages that contain certain text
+        '''
+        condition = "text LIKE '%" + text + "%'"
+        return self.select(condition)
+
     def select(self, condition):
         '''
         Select messages from 'msg' table alone and return SNSApi's MessageList
