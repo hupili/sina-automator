@@ -14,7 +14,6 @@ Make the invokation from Python interpreter more convenient.
 Use synchronous calls. 
 '''
 def _dummy_decorator_generator(*args, **kwargs):
-    @wraps(func)
     def _dummy_decorator(func):
         return func
     return _dummy_decorator
@@ -132,6 +131,23 @@ class WeiboAutomator(object):
     def clear(self):
         return self.rlq.clear()
 
+    def get_uid(self):
+        if hasattr(self, '_uid'):
+            return self._uid
+        else:
+            ret = self.weibo.weibo_request('account/get_uid',
+                    'GET',
+                    {})
+            return ret['uid']
+         
+    uid = property(get_uid)
+
+    def rate_limit_status(self):
+        ret = self.weibo.weibo_request('account/rate_limit_status',
+                'GET',
+                {})
+        return ret
+
     @rate_limit(buckets=POLICY_GROUP['follow'], callback=_log)
     def follow(self, uid):
         ret = self.weibo.weibo_request('friendships/create',
@@ -185,10 +201,14 @@ class WeiboAutomator(object):
     @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
     def get_friends(self, uid=None, screen_name=None, count=200, cursor=None):
         params = {'count': count}
+
         if not uid is None:
             params['uid'] = uid
-        else:
+        elif not screen_name is None:
             params['screen_name'] = screen_name
+        else:
+            params['uid'] = self.uid
+
         if not cursor is None:
             params['cursor'] = cursor
         ret = self.weibo.weibo_request('friendships/friends',
@@ -199,10 +219,14 @@ class WeiboAutomator(object):
     @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
     def get_friends_ids(self, uid=None, screen_name=None, count=5000, cursor=None):
         params = {'count': count}
+
         if not uid is None:
             params['uid'] = uid
-        else:
+        elif not screen_name is None:
             params['screen_name'] = screen_name
+        else:
+            params['uid'] = self.uid
+
         if not cursor is None:
             params['cursor'] = cursor
         ret = self.weibo.weibo_request('friendships/friends/ids',
@@ -213,10 +237,14 @@ class WeiboAutomator(object):
     @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
     def get_followers(self, uid=None, screen_name=None, count=200, cursor=None):
         params = {'count': count}
+
         if not uid is None:
             params['uid'] = uid
-        else:
+        elif not screen_name is None:
             params['screen_name'] = screen_name
+        else:
+            params['uid'] = self.uid
+
         if not cursor is None:
             params['cursor'] = cursor
         ret = self.weibo.weibo_request('friendships/followers',
@@ -227,10 +255,14 @@ class WeiboAutomator(object):
     @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
     def get_followers_ids(self, uid=None, screen_name=None, count=5000, cursor=None):
         params = {'count': count}
+
         if not uid is None:
             params['uid'] = uid
-        else:
+        elif not screen_name is None:
             params['screen_name'] = screen_name
+        else:
+            params['uid'] = self.uid
+
         if not cursor is None:
             params['cursor'] = cursor
         ret = self.weibo.weibo_request('friendships/followers/ids',
@@ -241,10 +273,14 @@ class WeiboAutomator(object):
     @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
     def get_followers_active(self, uid=None, screen_name=None, count=200, cursor=None):
         params = {'count': count}
+
         if not uid is None:
             params['uid'] = uid
-        else:
+        elif not screen_name is None:
             params['screen_name'] = screen_name
+        else:
+            params['uid'] = self.uid
+
         if not cursor is None:
             params['cursor'] = cursor
         ret = self.weibo.weibo_request('friendships/followers/active',
