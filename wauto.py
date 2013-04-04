@@ -183,6 +183,21 @@ class WeiboAutomator(object):
         return self.weibo.forward(status, text)
 
     @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
+    def show(self, uid = None, screen_name = None):
+        params = {}
+        if not uid is None:
+            params['uid'] = uid
+        elif not screen_name is None:
+            params['screen_name'] = screen_name
+        else:
+            params['uid'] = self.uid
+
+        ret = self.weibo.weibo_request('users/show',
+                'GET',
+                params)
+        return ret
+
+    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
     def domain_show(self, url):
         '''Lookup user by personal url. 
         We will match and remove common weibo prefix. 
@@ -191,7 +206,7 @@ class WeiboAutomator(object):
             e.g. 'http://weibo.com/xiena' --> url='xiena'
         '''
         import re
-        pattern = re.compile('^http:\/\/(www\.)?weibo.com\/')
+        pattern = re.compile('^http:\/\/.*weibo.com\/')
         url = re.sub(pattern, '', url)
         ret = self.weibo.weibo_request('users/domain_show',
                 'GET',
@@ -284,6 +299,17 @@ class WeiboAutomator(object):
         if not cursor is None:
             params['cursor'] = cursor
         ret = self.weibo.weibo_request('friendships/followers/active',
+                'GET',
+                params)
+        return ret
+
+    # This Api is only for advanced app permission
+    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
+    def search_topics(self, q, count=50, page=None):
+        params = {'count': count}
+        if not page is None:
+            params['page'] = page
+        ret = self.weibo.weibo_request('search/topics',
                 'GET',
                 params)
         return ret
