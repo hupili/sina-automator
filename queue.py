@@ -228,14 +228,18 @@ class Queue(object):
 
         return message_list
 
-    def sql(self, condition):
+    def select(self, condition):
+        '''
+        Select messages from 'msg' table alone and return SNSApi's MessageList
+        '''
+        qs = "SELECT DISTINCT msg.id,msg.pyobj FROM msg WHERE %s" % condition
+        return self.sql(qs)
+
+    def sql(self, query_string):
         cur = self.con.cursor()
-        
         try:
-            # We trust the client string. This software is intended for personal use. 
-            qs = "SELECT DISTINCT msg.id,msg.pyobj FROM msg,msg_tag WHERE %s" % condition
-            r = cur.execute(qs)
-            logger.debug("SQL query string: %s", qs)
+            r = cur.execute(query_string)
+            logger.debug("SQL query string: %s", query_string)
 
             message_list = snstype.MessageList()
             for m in r:
@@ -244,7 +248,7 @@ class Queue(object):
                 message_list.append(obj)
             return message_list
         except Exception, e:
-            logger.warning("Catch exception when executing '%s': %s", condition, e)
+            logger.warning("Catch exception when executing '%s': %s", query_string, e)
             return snstype.MessageList()
 
     def flag(self, message, fl):
@@ -347,24 +351,6 @@ class Queue(object):
 
         self.log("[tag]%s;%s;%s" % (msg_id, tg, ret))
         return ret
-
-    def forward(self, msg_id, comment):
-        cur = self.con.cursor()
-        try:
-            r = cur.execute('''
-            SELECT pyobj FROM msg
-            WHERE id=?
-            ''', (msg_id, ))
-            str_obj = r.next()[0]
-            message = self._str2pyobj(str_obj)
-
-            result = self.sp.forward(message, comment)
-
-            self.log('[forward]%s;%s;%s' % (msg_id, result, comment)) 
-            return result
-        except Exception, e:
-            logger.warning("Catch exception: %s", e)
-            return {}
 
 if __name__ == '__main__':
     q = Queue()
