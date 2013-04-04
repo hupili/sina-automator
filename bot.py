@@ -8,14 +8,12 @@ import dill
 
 from wauto import WeiboAutomator
 from queue import Queue
+from waiter import Waiter
 
 FN_WORKSPACE = 'workingspace.bin'
 
-def _input(x):
-    q.input(x)
-
 def _load():
-    global wa, q, data
+    global wa, q, data, w
     try:
         with open(FN_WORKSPACE) as fp:
             _workspace = dill.loads(fp.read())
@@ -24,20 +22,29 @@ def _load():
             wa = _workspace['wa']
             q = _workspace['q']
             q.connect()
+            w = _workspace['w']
     except IOError:
         data = {}
         wa = WeiboAutomator()
         q = Queue('message.db')
         q.connect()
+        w_timeline = Waiter(200, wa.home_timeline, (), 
+                {'count': 100, 'callback': q.input})
+        w = [w_timeline]
 
 def _save():
     with open(FN_WORKSPACE, 'w') as fp:
-        _workspace = {'data': data, 'wa': wa, 'q': q}
+        _workspace = {'data': data, 'wa': wa, 'q': q, 'w': w}
         fp.write(dill.dumps(_workspace))
+
+def _run_regular_job():
+    for j in w:
+        j.run()
 
 _load()
 import atexit
 atexit.register(_save)
+_run_regular_job()
 
 if __name__ == '__main__':
     from time import sleep
