@@ -128,8 +128,8 @@ class WeiboAutomator(object):
     def run(self):
         return self.rlq.run()
 
-    def clear(self):
-        return self.rlq.clear()
+    def clear_tasks(self):
+        return self.rlq.clear_tasks()
 
     def get_uid(self):
         if hasattr(self, '_uid'):
