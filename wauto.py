@@ -2,11 +2,7 @@
 
 import sys
 sys.path.append('snsaspi')
-#import copy
-#import marshal
-#import types
-#import cPickle as pickle
-#import dill
+from functools import wraps
 
 import snsapi
 from snsapi.snspocket import SNSPocket
@@ -18,6 +14,7 @@ Make the invokation from Python interpreter more convenient.
 Use synchronous calls. 
 '''
 def _dummy_decorator_generator(*args, **kwargs):
+    @wraps(func)
     def _dummy_decorator(func):
         return func
     return _dummy_decorator
@@ -36,13 +33,13 @@ def cal_bucket(upperbound, period):
     :param period: y (in seconds)
     '''
     # for safety
-    ratio_capacity = 0.8
-    ratio_init = 0.1
+    ratio_capacity = 0.9
+    ratio_init = 0.3
     upperbound = float(upperbound)
     period = float(period)
     fill_rate = upperbound / period
-    tokens_max = upperbound * 0.8
-    tokens_init = upperbound * 0.1
+    tokens_max = upperbound * ratio_capacity
+    tokens_init = upperbound * ratio_init
     return LeakyBucket(tokens_max, tokens_init, fill_rate)
 
 
