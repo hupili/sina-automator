@@ -15,21 +15,24 @@ def _input(x):
     q.input(x)
 
 def _load():
-    global wa, q
+    global wa, q, data
     try:
         with open(FN_WORKSPACE) as fp:
             _workspace = dill.loads(fp.read())
+            # To store any user data
+            data = _workspace['data']
             wa = _workspace['wa']
             q = _workspace['q']
             q.connect()
     except IOError:
+        data = {}
         wa = WeiboAutomator()
         q = Queue('message.db')
         q.connect()
 
 def _save():
     with open(FN_WORKSPACE, 'w') as fp:
-        _workspace = {'wa': wa, 'q': q}
+        _workspace = {'data': data, 'wa': wa, 'q': q}
         fp.write(dill.dumps(_workspace))
 
 _load()
