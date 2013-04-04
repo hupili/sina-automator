@@ -16,12 +16,12 @@ def user_extract(text):
     # v3
     #r = re.compile(r'(@.+?)([ :,\(\|$])')
     # v4
-    r = re.compile(r'((转自|@)[^@ ]+?)([\s:;,\(\|$\[\]\(\)/])')
+    r = re.compile(r'((转自|@)([^@ ]+?))([\s:;,\(\|$\[\]\(\)/])')
     l = r.finditer(text)
     ret['users'] = []
     if not l is None:
         for m in l:
-            u = m.groups()[0].decode('utf-8')
+            u = m.groups()[2].decode('utf-8')
             #print u
             # v5
             for s in separator:

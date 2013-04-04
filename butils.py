@@ -11,3 +11,17 @@ def get_followers(uid, cursor):
 
 from extraction.userext import user_extract
 from extraction.urlext import url_extract
+
+def _ana_user(message):
+    ul = user_extract(message.parsed.text)['users']
+    return ul
+
+def ana_users(message_list):
+    '''
+    Both Message or MessageList are supported
+    '''
+    if isinstance(message_list, list):
+        ul = map(_ana_user, message_list)
+        return reduce(lambda a,b: a + b, ul, [])
+    else:
+        return _ana_user(message_list)
