@@ -25,3 +25,17 @@ def ana_users(message_list):
         return reduce(lambda a,b: a + b, ul, [])
     else:
         return _ana_user(message_list)
+
+def _print(s):
+    print s
+
+def cmd_everytime():
+    try:
+        fn = open('cmd.everytime')
+        cmds = fn.read().split('\n')
+    except IOError:
+        cmds = []
+    for c in cmds:
+        c = c.strip()
+        if len(c) > 0:
+            eval(c)

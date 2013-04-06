@@ -44,16 +44,19 @@ def _run_regular_job():
 _load()
 import atexit
 atexit.register(_save)
+
+import butils
+import sys
+_bu = sys.modules['butils']
+setattr(_bu, 'wa', wa)
+setattr(_bu, 'w', w)
+setattr(_bu, 'q', q)
+setattr(_bu, 'data', data)
+
 _run_regular_job()
 
-if __name__ == '__main__':
-    import butils
-    import sys
-    _bu = sys.modules['butils']
-    setattr(_bu, 'wa', wa)
-    setattr(_bu, 'w', w)
-    setattr(_bu, 'data', data)
 
+if __name__ == '__main__':
     from time import sleep
     import pprint
     wa.run()
