@@ -162,15 +162,15 @@ class WeiboAutomator(object):
                 {'screen_name': screen_name})
         return ret
 
-    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
+    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log, priority=1)
     def home_timeline(self, count=20):
         return self.weibo.home_timeline(count)
 
-    @rate_limit(buckets=POLICY_GROUP['update'], callback=_log)
+    @rate_limit(buckets=POLICY_GROUP['update'], callback=_log, priority=5)
     def update(self, text):
         return self.weibo.update(text)
 
-    @rate_limit(buckets=POLICY_GROUP['reply'], callback=_log)
+    @rate_limit(buckets=POLICY_GROUP['reply'], callback=_log, priority=4)
     def reply(self, status, text):
         if isinstance(status, snsapi.snstype.Message):
             statusID = status.ID
@@ -178,7 +178,7 @@ class WeiboAutomator(object):
             statusID = status
         return self.weibo.reply(statusID, text)
 
-    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
+    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log, priority=4)
     def forward(self, status, text):
         return self.weibo.forward(status, text)
 
