@@ -10,6 +10,24 @@ from snsapi import snstype
 
 import pickle
 
+def refresh_my_info():
+    wa.show(callback=lambda x: data.update({'myinfo': x}))
+    data['friends'] = []
+    data['followers'] = []
+    if 'myinfo' in data:
+        followers_count = data['myinfo']['followers_count']
+        friends_count = data['myinfo']['friends_count']
+    else:
+        friends_count = 0
+        followers_count = 0 
+    def _exe(func, field, count, cursor):
+        func(count=count, cursor=cursor, callback=lambda x: data[field].extend(x['users']))
+    count = 200
+    for i in range(0, int(friends_count / count) + 1):
+        _exe(wa.get_friends, 'friends', count, i * count)
+    for i in range(0, int(followers_count / count) + 1):
+        _exe(wa.get_followers, 'followers', count, i * count)
+
 def get_followers(uid, cursor):
     if not '_get_followers' in data:
         data['_get_followers'] = []
