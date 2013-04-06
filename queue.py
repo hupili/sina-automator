@@ -228,6 +228,10 @@ class Queue(object):
 
         return message_list
 
+    def select_digest(self, digest):
+        condition = "digest='" + digest + "'"
+        return self.select(condition)
+
     def select_username(self, username, count=None):
         condition = "username LIKE '%" + username + "%'"
         return self.select(condition, count)
