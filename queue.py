@@ -228,22 +228,24 @@ class Queue(object):
 
         return message_list
 
-    def select_username(self, username):
+    def select_username(self, username, count=None):
         condition = "username LIKE '%" + username + "%'"
-        return self.select(condition)
+        return self.select(condition, count)
 
-    def select_text(self, text):
+    def select_text(self, text, count=None):
         '''
         Select messages that contain certain text
         '''
         condition = "text LIKE '%" + text + "%'"
-        return self.select(condition)
+        return self.select(condition, count)
 
-    def select(self, condition):
+    def select(self, condition, count=None):
         '''
         Select messages from 'msg' table alone and return SNSApi's MessageList
         '''
         qs = "SELECT DISTINCT msg.id,msg.pyobj FROM msg WHERE %s" % condition
+        if count:
+            qs += "ORDER BY rowid DESC LIMIT " + str(count)
         return self.sql(qs)
 
     def sql(self, query_string):
