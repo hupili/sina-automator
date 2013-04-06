@@ -78,7 +78,7 @@ def _store_msg(ml):
     with open(FN_STORE_MSG_INTERSTING, 'a') as fp:
         for m in l:
             s = m.digest()
-            fp.write('===\nsig:%s\n---\n%s\n---\n' % (s, str(m)))
+            fp.write('\n===\nsig:%s\n---\n%s\n---\n' % (s, str(m)))
 
 
 import os

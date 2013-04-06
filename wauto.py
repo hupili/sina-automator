@@ -3,11 +3,25 @@
 import sys
 sys.path.append('snsaspi')
 from functools import wraps
+import json
 
 import snsapi
 from snsapi.snspocket import SNSPocket
 from snsapi.snslog import SNSLog as logger
 from lbucket import *
+
+try:
+    _wauto_conf = json.loads(open('conf/wauto.json').read())
+except Exception, e:
+    logger.warning("Load conf error: %s. Use default", e)
+    _wauto_conf = {}
+    _wauto_conf['priority'] = {
+      'update': 5, 
+      'home_timeline': 4,
+      'forward': 3, 
+      'reply': 3
+    }
+logger.debug("conf: %s", _wauto_conf)
 
 ''' 
 Make the invokation from Python interpreter more convenient. 
@@ -20,7 +34,6 @@ def _dummy_decorator_generator(*args, **kwargs):
 
 if __name__ == '__main__':
     rate_limit = _dummy_decorator_generator
-
 
 def cal_bucket(upperbound, period):
     '''
@@ -162,15 +175,18 @@ class WeiboAutomator(object):
                 {'screen_name': screen_name})
         return ret
 
-    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log, priority=1)
+    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log, 
+            priority=_wauto_conf['priority']['home_timeline'])
     def home_timeline(self, count=20):
         return self.weibo.home_timeline(count)
 
-    @rate_limit(buckets=POLICY_GROUP['update'], callback=_log, priority=5)
+    @rate_limit(buckets=POLICY_GROUP['update'], callback=_log,
+            priority=_wauto_conf['priority']['update'])
     def update(self, text):
         return self.weibo.update(text)
 
-    @rate_limit(buckets=POLICY_GROUP['reply'], callback=_log, priority=4)
+    @rate_limit(buckets=POLICY_GROUP['reply'], callback=_log,
+            priority=_wauto_conf['priority']['reply'])
     def reply(self, status, text):
         if isinstance(status, snsapi.snstype.Message):
             statusID = status.ID
@@ -178,7 +194,8 @@ class WeiboAutomator(object):
             statusID = status
         return self.weibo.reply(statusID, text)
 
-    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log, priority=4)
+    @rate_limit(buckets=POLICY_GROUP['general'], callback=_log,
+            priority=_wauto_conf['priority']['forward'])
     def forward(self, status, text):
         return self.weibo.forward(status, text)
 
