@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-sys.path.append('snsaspi')
+sys.path.append('snsapi')
 import snsapi
 from snsapi.utils import Serialize
 from snsapi.snslog import SNSLog as logger

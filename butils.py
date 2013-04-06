@@ -5,7 +5,7 @@ Bot Utils
 '''
 
 import sys
-sys.path.append('snsaspi')
+sys.path.append('snsapi')
 from snsapi import snstype
 
 import pickle

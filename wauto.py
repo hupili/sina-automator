@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-sys.path.append('snsaspi')
+sys.path.append('snsapi')
 from functools import wraps
 import json
 
