@@ -52,6 +52,20 @@ def ana_users(message_list):
     else:
         return _ana_user(message_list)
 
+def _ana_pic(message):
+    if 'original_pic' in message.raw:
+        return [message.raw['original_pic']]
+    if 'retweeted_status' in message.raw and 'original_pic' in message.raw['retweeted_status']:
+        return [message.raw['retweeted_status']['original_pic']]
+    return []
+
+def ana_pic(message_list):
+    if isinstance(message_list, list):
+        ul = map(_ana_pic, message_list)
+        return reduce(lambda a,b: a + b, ul, [])
+    else:
+        return _ana_pic(message_list)
+
 def _filter_duplicate(fn_pickle, ml):
     try:
         sig = pickle.load(open(fn_pickle))
