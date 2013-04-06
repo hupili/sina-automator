@@ -68,18 +68,24 @@ class RateLimitQueue(object):
         '''
         self._tasks.append(task)
 
+    def _check_and_run(self, t):
+        ok = True
+        for (b, q) in t.buckets.items():
+            if self._buckets[b].tokens < q:
+                ok = False
+                break
+        if ok:
+            map(lambda x: self._buckets[x[0]].consume(x[1]), t.buckets.items())
+            ret = t.execute()
+            return True
+        else:
+            return False
+
     def run(self):
         _new_tasks = []
-        for t in self._tasks:
-            ok = True
-            for (b, q) in t.buckets.items():
-                if self._buckets[b].tokens < q:
-                    ok = False
-                    break
-            if ok:
-                map(lambda x: self._buckets[x[0]].consume(x[1]), t.buckets.items())
-                ret = t.execute()
-            else:
+        sorted_tasks = sorted(self._tasks, key=lambda t: t.priority, reverse=True)
+        for t in sorted_tasks:
+            if not self._check_and_run(t):
                 _new_tasks.append(t)
         self._tasks = _new_tasks
 
@@ -98,13 +104,14 @@ class RateLimitQueue(object):
 
 class RLQTask(object):
     """docstring for RLQTask"""
-    def __init__(self, func, args, kwargs, buckets, callback=None):
+    def __init__(self, func, args, kwargs, buckets, callback=None, priority=0):
         super(RLQTask, self).__init__()
         self.func = func
         self.args = args 
         self.kwargs = kwargs
         self.buckets = buckets
         self.callback = callback
+        self.priority = priority
 
     def execute(self):
         ret = None

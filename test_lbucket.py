@@ -148,6 +148,21 @@ def test_rlq_rate_limit4():
     c.func_with_callback_param(callback='hello')
     c.rlq.run()
 
+def _print(msg):
+    print msg
+
+def test_rlq_rate_limit5():
+    # RLQ test: priority
+    b = LeakyBucket(20, 10, 5)
+    q = RateLimitQueue()
+    q.add_bucket('quota', b)
+    q.add_task(RLQTask(_print, ('1'), {}, {}))
+    q.add_task(RLQTask(_print, ('2'), {}, {}))
+    q.add_task(RLQTask(_print, ('3'), {}, {}))
+    q.add_task(RLQTask(_print, ('4'), {}, {}, priority=10))
+    q.add_task(RLQTask(_print, ('5'), {}, {}, priority=5))
+    q.run()
+
 
 if __name__ == '__main__':
     #test_bucket()
@@ -157,5 +172,6 @@ if __name__ == '__main__':
     #test_rlq_rate_limit()
     #test_rlq_rate_limit2()
     #test_rlq_rate_limit3()
-    test_rlq_rate_limit4()
+    #test_rlq_rate_limit4()
+    test_rlq_rate_limit5()
 
