@@ -133,7 +133,7 @@ class RLQTask(object):
 
 from functools import wraps
 
-def rate_limit(attr_rlq='rlq', buckets={}, callback=None):
+def rate_limit(attr_rlq='rlq', buckets={}, callback=None, priority=0):
     '''Decorate a rate limited function with callback function.
     It can only be used to decorate an object method and the object should
     have a RateLimitQueue field indicated by the name ``attr_rlq``.
@@ -170,7 +170,8 @@ def rate_limit(attr_rlq='rlq', buckets={}, callback=None):
             else:
                 _cb = callback
             q = getattr(self, attr_rlq)
-            t = RLQTask(func, (self, ) + args, kwargs, copy.deepcopy(buckets), _cb)
+            t = RLQTask(func, (self, ) + args, kwargs, copy.deepcopy(buckets), 
+                    callback=_cb, priority=priority)
             q.add_task(t)
             return None
         return wrapped_func
