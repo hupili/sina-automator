@@ -4,6 +4,10 @@
 Bot Utils
 '''
 
+import sys
+sys.path.append('snsaspi')
+from snsapi import snstype
+
 import pickle
 
 def get_followers(uid, cursor):
@@ -28,24 +32,34 @@ def ana_users(message_list):
     else:
         return _ana_user(message_list)
 
-FN_STORE_MSG = 'store/sig.pickle'
+def _filter_duplicate(fn_pickle, ml):
+    try:
+        sig = pickle.load(open(fn_pickle))
+    except IOError:
+        sig = set()
+    ret = snstype.MessageList()
+    for m in ml:
+        s = m.digest()
+        if not s in sig:
+            sig.add(s)
+            ret.append(m)
+    pickle.dump(sig, open(fn_pickle, 'w'))
+    return ret
+
+FN_STORE_SIG_INTERSTING = 'store/sig.pickle'
+FN_STORE_MSG_INTERSTING = 'store/msg.interesting'
 def _store_msg(ml):
     '''
     Store with decuplication.
 
     :param ml: MessageList object
     '''
-    try:
-        sig = pickle.load(open(FN_STORE_MSG))
-    except IOError:
-        sig = set()
-    with open('store/msg.interesting', 'a') as fp:
-        for m in ml:
+    l = _filter_duplicate(FN_STORE_SIG_INTERSTING, ml)
+    with open(FN_STORE_MSG_INTERSTING, 'a') as fp:
+        for m in l:
             s = m.digest()
-            if not s in sig:
-                sig.add(s)
-                fp.write('===\nsig:%s\n---\n%s\n---\n' % (s, str(m)))
-    pickle.dump(sig, open('store/sig.pickle', 'w'))
+            fp.write('===\nsig:%s\n---\n%s\n---\n' % (s, str(m)))
+
 
 import os
 import re
@@ -63,13 +77,14 @@ def _forward_msg():
             comment = r.groups()[0].strip()
             sig = r.groups()[1].strip()
             origin = r.groups()[2].strip()
-            wa.forward(q.select_digest(sig)[0], comment)
+            wa.forward(q.select_digest(sig)[0], comment.decode('utf-8'))
     if os.path.exists(FN_STORE_MSG_FORWARD):
         os.unlink(FN_STORE_MSG_FORWARD)
 
 def _print(s):
     print s
 
+PATTERN_COMMENT = re.compile('^\s*#.*$')
 def cmd_everytime():
     try:
         fn = open('cmd.everytime')
@@ -78,5 +93,8 @@ def cmd_everytime():
         cmds = []
     for c in cmds:
         c = c.strip()
-        if len(c) > 0:
-            eval(c)
+        if not PATTERN_COMMENT.match(c):
+            # Skip comments
+            print c
+            if len(c) > 0:
+                eval(c)
