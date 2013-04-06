@@ -10,6 +10,8 @@ from snsapi import snstype
 
 import pickle
 
+from datetime import datetime as dt
+
 def refresh_my_info():
     wa.show(callback=lambda x: data.update({'myinfo': x}))
     data['friends'] = []
@@ -103,9 +105,9 @@ def _print(s):
     print s
 
 PATTERN_COMMENT = re.compile('^\s*#.*$')
-def cmd_everytime():
+def cmd_from_file(fn):
     try:
-        fn = open('cmd.everytime')
+        fn = open(fn)
         cmds = fn.read().split('\n')
     except IOError:
         cmds = []
@@ -116,3 +118,17 @@ def cmd_everytime():
             print c
             if len(c) > 0:
                 eval(c)
+
+def _when(predicate, func):
+    '''
+    :param predicate:
+        e.g. 
+        ``lambda hour, minute: minute==0``
+
+    :param func:
+        e.g. 
+        ``lambda: wa.update('hello')``
+    '''
+    h, m = dt.now().hour, dt.now().minute
+    if predicate(h, m):
+        func()

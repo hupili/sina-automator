@@ -55,8 +55,10 @@ setattr(_bu, 'data', data)
 
 _run_regular_job()
 
-
 if __name__ == '__main__':
+    cmd_fns = sys.argv[1:]
+    for fn in cmd_fns:
+        butils.cmd_from_file(fn)
     from time import sleep
     import pprint
     wa.run()
