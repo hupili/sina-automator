@@ -14,19 +14,23 @@ from datetime import datetime as dt
 
 import random
 
-def shuffle(*l):
-    '''
-    A general shuffle. 
-
-    Every argument can be 'str'/'unicode' or 'list'. 
-    '''
-    l = list(l)
+def _tuple_to_list_collapse(t):
+    l = list(t)
     new_l = []
     for i in l:
         if isinstance(i, list):
             new_l.extend(i)
         else:
             new_l.append(i)
+    return new_l
+
+def shuffle(*l):
+    '''
+    A general shuffle. 
+
+    Every argument can be 'str'/'unicode' or 'list'. 
+    '''
+    new_l = _tuple_to_list_collapse(l)
     s = reduce(lambda a,b: a+str(b), sorted(new_l, key=lambda x: random.random()), '')
     if isinstance(s, unicode):
         return s
@@ -36,7 +40,8 @@ def shuffle(*l):
 def rand_repeat(s, max_repeat):
     return s * random.randint(1, max_repeat)
 
-def rand_select(lst):
+def rand_select(*lst):
+    lst = _tuple_to_list_collapse(lst)
     return random.sample(lst, 1)[0]
 
 def refresh_my_info():
