@@ -12,6 +12,22 @@ import pickle
 
 from datetime import datetime as dt
 
+import random
+
+def shuffle(*l):
+    l = list(l)
+    s = reduce(lambda a,b: a+str(b), sorted(l, key=lambda x: random.random()), '')
+    if isinstance(s, unicode):
+        return s
+    else:
+        return s.decode('utf-8')
+
+def rand_repeat(s, max_repeat):
+    return s * random.randint(1, max_repeat)
+
+def rand_select(lst):
+    return random.sample(lst, 1)[0]
+
 def refresh_my_info():
     wa.show(callback=lambda x: data.update({'myinfo': x}))
     data['friends'] = []
@@ -66,7 +82,7 @@ def ana_pic(message_list):
     else:
         return _ana_pic(message_list)
 
-def _filter_duplicate(fn_pickle, ml):
+def filter_duplicate(fn_pickle, ml):
     try:
         sig = pickle.load(open(fn_pickle))
     except IOError:
@@ -82,13 +98,13 @@ def _filter_duplicate(fn_pickle, ml):
 
 FN_STORE_SIG_INTERSTING = 'store/sig.pickle'
 FN_STORE_MSG_INTERSTING = 'store/msg.interesting'
-def _store_msg(ml):
+def store_msg(ml):
     '''
     Store with decuplication.
 
     :param ml: MessageList object
     '''
-    l = _filter_duplicate(FN_STORE_SIG_INTERSTING, ml)
+    l = filter_duplicate(FN_STORE_SIG_INTERSTING, ml)
     with open(FN_STORE_MSG_INTERSTING, 'a') as fp:
         for m in l:
             s = m.digest()
@@ -99,7 +115,7 @@ import os
 import re
 PATTERN_STORE_MSG = re.compile('(.*)\nsig:(.+)\n---\n(.+)\n---',  re.DOTALL)
 FN_STORE_MSG_FORWARD = 'store/msg.forward'
-def _forward_msg():
+def forward_msg():
     try:
         content = open(FN_STORE_MSG_FORWARD).read()
         msgs = content.split('===')
@@ -115,7 +131,7 @@ def _forward_msg():
     if os.path.exists(FN_STORE_MSG_FORWARD):
         os.unlink(FN_STORE_MSG_FORWARD)
 
-def _print(s):
+def my_print(s):
     print s
 
 PATTERN_COMMENT = re.compile('^\s*#.*$')
@@ -133,7 +149,7 @@ def cmd_from_file(fn):
             if len(c) > 0:
                 eval(c)
 
-def _when(predicate, func):
+def when(predicate, func):
     '''
     :param predicate:
         e.g. 

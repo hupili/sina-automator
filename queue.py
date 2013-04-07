@@ -253,7 +253,7 @@ class Queue(object):
         '''
         qs = "SELECT DISTINCT msg.id,msg.pyobj FROM msg WHERE %s" % condition
         if count:
-            qs += "ORDER BY rowid DESC LIMIT " + str(count)
+            qs += " ORDER BY rowid DESC LIMIT " + str(count)
         return self.sql(qs)
 
     def sql(self, query_string):

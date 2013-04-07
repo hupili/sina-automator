@@ -144,6 +144,12 @@ class WeiboAutomator(object):
     def clear_tasks(self):
         return self.rlq.clear_tasks()
 
+    def _tounicode(self, text):
+        if isinstance(text, unicode):
+            return text
+        else:
+            return text.decode('utf-8')
+
     def get_uid(self):
         if hasattr(self, '_uid'):
             return self._uid
@@ -183,7 +189,7 @@ class WeiboAutomator(object):
     @rate_limit(buckets=POLICY_GROUP['update'], callback=_log,
             priority=_wauto_conf['priority']['update'])
     def update(self, text):
-        return self.weibo.update(text)
+        return self.weibo.update(self._tounicode(text))
 
     @rate_limit(buckets=POLICY_GROUP['reply'], callback=_log,
             priority=_wauto_conf['priority']['reply'])
@@ -192,12 +198,12 @@ class WeiboAutomator(object):
             statusID = status.ID
         else:
             statusID = status
-        return self.weibo.reply(statusID, text)
+        return self.weibo.reply(statusID, self._tounicode(text))
 
     @rate_limit(buckets=POLICY_GROUP['general'], callback=_log,
             priority=_wauto_conf['priority']['forward'])
     def forward(self, status, text):
-        return self.weibo.forward(status, text)
+        return self.weibo.forward(status, self._tounicode(text))
 
     @rate_limit(buckets=POLICY_GROUP['general'], callback=_log)
     def show(self, uid = None, screen_name = None):

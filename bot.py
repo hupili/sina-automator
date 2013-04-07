@@ -52,13 +52,15 @@ setattr(_bu, 'wa', wa)
 setattr(_bu, 'w', w)
 setattr(_bu, 'q', q)
 setattr(_bu, 'data', data)
+from butils import *
 
 _run_regular_job()
 
 if __name__ == '__main__':
     cmd_fns = sys.argv[1:]
     for fn in cmd_fns:
-        butils.cmd_from_file(fn)
+        #butils.cmd_from_file(fn)
+        execfile(fn)
     from time import sleep
     import pprint
     wa.run()
