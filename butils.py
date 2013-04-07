@@ -15,8 +15,19 @@ from datetime import datetime as dt
 import random
 
 def shuffle(*l):
+    '''
+    A general shuffle. 
+
+    Every argument can be 'str'/'unicode' or 'list'. 
+    '''
     l = list(l)
-    s = reduce(lambda a,b: a+str(b), sorted(l, key=lambda x: random.random()), '')
+    new_l = []
+    for i in l:
+        if isinstance(i, list):
+            new_l.extend(i)
+        else:
+            new_l.append(i)
+    s = reduce(lambda a,b: a+str(b), sorted(new_l, key=lambda x: random.random()), '')
     if isinstance(s, unicode):
         return s
     else:
@@ -162,3 +173,9 @@ def when(predicate, func):
     h, m = dt.now().hour, dt.now().minute
     if predicate(h, m):
         func()
+
+if __name__ == '__main__':
+    print "shuffle:", shuffle('1', '2', '3')
+    print "shuffle:", shuffle(['1', '2'], '3')
+    print "rand_repeat:", rand_repeat('x', 5)
+    print "rand_select:", rand_select(['1', '2', ['3']])
