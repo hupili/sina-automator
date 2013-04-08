@@ -31,6 +31,8 @@ def _load():
         w_timeline = Waiter(200, wa.home_timeline, (), 
                 {'count': 100, 'callback': q.input})
         w = [w_timeline]
+        #w_refresh_info = Waiter(3600 * 4, butils.refresh_my_info, (), {})
+        #w = [w_timeline, w_refresh_info]
 
 def _save():
     with open(FN_WORKSPACE, 'w') as fp:

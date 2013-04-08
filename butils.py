@@ -62,10 +62,20 @@ def refresh_my_info():
     for i in range(0, int(followers_count / count) + 1):
         _exe(wa.get_followers, 'followers', count, i * count)
 
-def get_followers(uid, cursor):
+def get_followers(uid, cursor=0):
     if not '_get_followers' in data:
         data['_get_followers'] = []
     wa.get_followers(uid, cursor=cursor, callback=lambda x: data['_get_followers'].extend(x['users']))
+
+def get_friends(uid, cursor=0):
+    if not '_get_friends' in data:
+        data['_get_friends'] = []
+    wa.get_friends(uid, cursor=cursor, callback=lambda x: data['_get_friends'].extend(x['users']))
+
+def get_friends_ids(uid, cursor=0):
+    if not '_get_friends_ids' in data:
+        data['_get_friends_ids'] = []
+    wa.get_friends_ids(uid, cursor=cursor, callback=lambda x: data['_get_friends_ids'].extend(x['ids']))
 
 from extraction.userext import user_extract
 from extraction.urlext import url_extract
