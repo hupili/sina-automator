@@ -189,6 +189,13 @@ def when(predicate, func):
     if predicate(h, m):
         func()
 
+def rand_execute(prob, func):
+    if prob >= 1.0:
+        func()
+    else: 
+        if random.random() < prob:
+            func()
+
 if __name__ == '__main__':
     print "shuffle:", shuffle('1', '2', '3')
     print "shuffle:", shuffle(['1', '2'], '3')
