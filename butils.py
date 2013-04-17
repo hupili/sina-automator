@@ -7,6 +7,7 @@ Bot Utils
 import sys
 sys.path.append('snsapi')
 from snsapi import snstype
+from snsapi.snslog import SNSLog as logger
 
 import pickle
 
@@ -159,6 +160,7 @@ def forward_msg():
 
 def my_print(s):
     print s
+    return s
 
 PATTERN_COMMENT = re.compile('^\s*#.*$')
 def cmd_from_file(fn):
@@ -194,10 +196,14 @@ def rand_execute(prob, func):
         func()
     else: 
         if random.random() < prob:
-            func()
+            logger.debug('func execute. prob: %f', prob)
+            return func()
+        else:
+            logger.debug('func do not execute. prob: %f', prob)
 
 if __name__ == '__main__':
     print "shuffle:", shuffle('1', '2', '3')
     print "shuffle:", shuffle(['1', '2'], '3')
     print "rand_repeat:", rand_repeat('x', 5)
     print "rand_select:", rand_select(['1', '2', ['3']])
+    print "rand_execute:", rand_execute(0.5, lambda:my_print(1+1))
