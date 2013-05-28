@@ -33,7 +33,9 @@ A brief view of the contents.
 ## Usage
 
    * Clone this repo. 
-   Fetch submodules (SNSAPI): 
+   * Install dependencies: 
+   e.g. `pip install --user -r requirements.txt`
+   * Fetch submodules (SNSAPI): 
    `git submodule init` and `git submodule update`
    * Get some basic knowledge of [SNSApi](https://github.com/hupili/snsapi).
    You only need to get a flavour of how to use it.
