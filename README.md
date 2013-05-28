@@ -189,4 +189,30 @@ Explanation:
    We already had a regular tasks in `bot.py`. 
    It fetches timeline and passes message to `queue.py` for storage. 
    The `Waiter` class guarantees the gap between consecutive calls to get timeline 
-   is larger than 200 seconds. 
+   is larger than 200 seconds.
+   * See codes.
+   * This project also demonstrates how you can extend SNSAPI platform **vertically**.
+   If you are also interested in extend **horizontally**, see SNSAPI. 
+
+## Rationales to Be Elaborated
+
+**Q:** 
+SinaWeibo has API to look up rate limit status. Why not using it? 
+
+**A:**
+First, this rate limit lookup is not available for all platforms. 
+The LeakeyBucket we prototyped in this project is more general and want to apply on all platforms.
+Second, the rate limit lookup, even supported by those OSNs, 
+is only server side limit. 
+Sometimes, you really want client side limit, 
+e.g. "do not fetch timeline too often on my mobile phone".
+In our way, the abstractions are the same. 
+Just define mutiple resources on a certain operation. 
+
+## Unlicensed
+
+![copyleft](http://unlicense.org/pd-icon.png)
+
+[http://unlicense.org](http://unlicense.org)
+
+All files of this project are released to public domain.
