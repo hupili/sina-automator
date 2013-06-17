@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        
+        <title>Machine Learning - 课程图谱 - 在线公开课的知识图谱</title>
+        
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="/static/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+        <link href="/static/css/font-awesome.min.css" rel="stylesheet" media="screen">
+        <link href="/static/css/reset.css" rel="stylesheet" media="screen">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/static/js/jquery.js" type="text/javascript"></script>
+        <script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="/static/moment/moment.js" type="text/javascript"></script>
+        <script src="/static/raty/lib/jquery.raty.min.js" type="text/javascript"></script>
+        <script src="/static/js/d3.v3.min.js" type="text/javascript"></script>
+        <script src="/static/js/d3.geo.projection.min.js" type="text/javascript"></script>
+        <script src="/static/js/d3.layout.cloud.js" type="text/javascript"></script>
+        <script src="/static/js/vega.js" type="text/javascript"></script>
+        <script src="/static/js/specs.js" type="text/javascript"></script>
+        <script src="/static/js/editor.js" type="text/javascript"></script>
+        
+<script type="text/javascript">
+    function avote(slug, id, vote) {
+        $.post('/vote/' + slug + '/' + id + '/' + vote, function(data){
+               $("#vote").html(data);
+               });
+    }
+function update_info() {
+    $(document).ready(function() {
+                      $.post('/vote/', function(data){
+                             $("#vote").html(data);
+                             });
+                      });
+}
+</script>
+<script src="/static/js/ajaxpost.js"></script>
+
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target="nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="/">课程图谱</a>
+            <div class="nav-collapse collapse">
+                <ul class = "nav lw_new">
+                    
+                    <li><a href="/navigation/">公开课导航</a></li>
+                    <li><a href="/reviews">课程评论</a></li>
+                    <li><a href="/tags">课程标签</a></li>
+                </ul>
+                <form class="navbar-search" action="/search" method="post" name="search"><div style="display:none;"><input id="csrf_token" name="csrf_token" type="hidden" value="20130617190927##83cbc910640a4f1bf7a4af3ad5085a358731e829"></div><input class="search-query" id="search" name="search" placeholder="搜索感兴趣的课程,评论,主题或用户" size="100" type="text" value="">
+                </form>
+                <ul class="nav pull-right">
+                    
+                    <li><a href="/login"><img src="../static/img/sina-weibo.png"></a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+        <div style="height:60px"></div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    
+
+
+
+<div class="row-fluid">
+    <div class="span6 offset1">
+        <h2>Machine Learning</h2>
+        
+        <p><em>开始时间: 04/22/2013
+        
+        
+        持续时间: 10 weeks</em>
+        
+        </p>
+        <table>
+            <tr>
+                <td>
+                    
+                    <p>所在平台: <a href="/provider/coursera">Coursera</a></p>
+                    
+                    
+                    <p>课程类别: <a href="/category/cs">计算机科学</a></p>
+                    
+                    
+                    <p>大学或机构: <a href="/organization/stanford">Stanford University</a></p>
+                    
+                    
+                    <p>授课老师：
+                    
+                    <a href="/instructor/andrew--ng-coursera-1244">Andrew  Ng</a>
+                    
+                    </p>
+                    
+                </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>
+                    <img src="https://s3.amazonaws.com/coursera/topics/ml/small-icon.hover.png">
+                </td>
+            </tr>
+        </table>
+        <p></p>
+        
+        <p>课程主页: <a href="https://www.coursera.org/course/ml">https://www.coursera.org/course/ml</a></p>
+        
+        
+        <p>课程评论: 13 个评论</p>
+        
+        <div id="star" data-score="4.5"></div>
+        <script>
+            $(document).ready(function(){
+                $('#star').raty( {
+                    path: '/static/img',
+                    readOnly: true,
+                    score: function() {
+                        return $(this).attr('data-score');
+                    }
+                });
+            });
+        </script>
+        <p></p>
+        
+        <p class="text-center"><a class="btn btn-primary btn-large" href="/write_review/machine-learning-coursera-ml-stanford-university">评论课程</a>
+        
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+        <a class="btn btn-primary btn-large"
+            href="/login">关注课程</a></p>
+        
+        <p></p>
+        <p></p>
+        <h4>课程详情</h4><p><p>Machine learning is the science of getting computers to act without being
+    explicitly programmed. In the past decade, machine learning has given us
+    self-driving cars, practical speech recognition, effective web search,
+    and a vastly improved understanding of the human genome. Machine learning
+    is so pervasive today that you probably use it dozens of times a day without
+    knowing it. Many researchers also think it is the best way to make progress
+    towards human-level AI. In this class, you will learn about the most effective
+    machine learning techniques, and gain practice implementing them and getting
+    them to work for yourself. More importantly, you'll learn about not only
+    the theoretical underpinnings of learning, but also gain the practical
+    know-how needed to quickly and powerfully apply these techniques to new
+    problems. Finally, you'll learn about some of Silicon Valley's best practices
+    in innovation as it pertains to machine learning and AI.</p>
+<p>This course provides a broad introduction to machine learning, datamining,
+    and statistical pattern recognition. Topics include: (i) Supervised learning
+    (parametric/non-parametric algorithms, support vector machines, kernels,
+    neural networks). (ii) Unsupervised learning (clustering, dimensionality
+    reduction, recommender systems, deep learning). (iii) Best practices in
+    machine learning (bias/variance theory; innovation process in machine learning
+    and AI). The course will also draw from numerous case studies and applications,
+    so that you'll also learn how to apply learning algorithms to building
+    smart robots (perception, control), text understanding (web search, anti-spam),
+    computer vision, medical informatics, audio, database mining, and other
+    areas.</p></p>
+        <p></p>
+        <p></p>
+        
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <h4>课程评论(13条)</h4>
+        <article id="vote">
+        
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>1</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/12158268614">超級現實的超現實理想主義者</a>
+            <small>2013-06-17 11:04</small>
+            <small>1 票支持; 0 票反对</small>
+            </p>
+            <p>
+            <div id="star_超級現實的超現實理想主義者Jun1713110440" data-score="4.5"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_超級現實的超現實理想主義者Jun1713110440').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>非常基础的一门课，吴老师将大部分精力用在培养思维方式和直觉上，对于初学者来说是最佳的入门渠道。不过对于喜欢“Get hands dirty”的朋友来说可能会有点失望，因为他的作业框架代码给得太全了</p>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>1</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/12072912615">EyonFresh</a>
+            <small>2013-06-05 17:37</small>
+            <small>1 票支持; 0 票反对</small>
+            </p>
+            <p>
+            <div id="star_EyonFreshJun0513173726" data-score="5.0"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_EyonFreshJun0513173726').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>还没学完，来个中期评价：入手真是比较容易。是优点也是缺点吧，感觉程序作业设置有些太容易了，代码框架给的太全。像我这种自制力值得商榷的人，随着时间的推移我越来越少去看整个程序的代码了。 建议大家在每次编程作业的时候，就算不自己写个完整的，也最好完整的看一遍代码。 另外辅助NG的http://cs229.stanford.edu/materials.html 中的一些lecture notes可能更好。</p>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>0</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/13032779637">xtliwen</a>
+            <small>2013-05-30 23:17</small>
+            <small>0 票支持; 0 票反对</small>
+            </p>
+            <p>
+            <div id="star_xtliwenMay3013231751" data-score="5.0"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_xtliwenMay3013231751').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>第一次认真听老外讲课，刚开始担心听不懂，硬着头皮听下去，逐渐的有了感觉。今天算是收获不小，卖出了第一步，一直都想深入学习机器学习，怎奈数学基础太差，看书看不进去。这门课，老师讲的浅显易懂，没有复杂的公式，借助这个平台，这次一定会坚持学下去。</p>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>0</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/11251302467">踮脚张望之bui</a>
+            <small>2013-05-20 08:18</small>
+            <small>0 票支持; 0 票反对</small>
+            </p>
+            <p>
+            <div id="star_踮脚张望之buiMay2013081808" data-score="4.0"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_踮脚张望之buiMay2013081808').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>刚上了几节课，还比价浅显易懂</p>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>1</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/11670887477">玩转大数据</a>
+            <small>2013-05-15 12:48</small>
+            <small>1 票支持; 0 票反对</small>
+            </p>
+            <p>
+            <div id="star_玩转大数据May1513124823" data-score="5.0"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_玩转大数据May1513124823').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>基本的数学的东西，感觉还是有些生疏了 有啥推荐的数学的恶补资料嘛</p>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>-1</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/11250468431">正在努力减肥的胖子</a>
+            <small>2013-05-15 09:21</small>
+            <small>0 票支持; 1 票反对</small>
+            </p>
+            <p>
+            <div id="star_正在努力减肥的胖子May1513092102" data-score="3.0"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_正在努力减肥的胖子May1513092102').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>t</p>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>-1</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/11844541312">十方三世一孤魂</a>
+            <small>2013-05-14 22:52</small>
+            <small>0 票支持; 1 票反对</small>
+            </p>
+            <p>
+            <div id="star_十方三世一孤魂May1413225201" data-score="5.0"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_十方三世一孤魂May1413225201').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>好！</p>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>1</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/11914152325">七画八画</a>
+            <small>2013-05-14 17:02</small>
+            <small>1 票支持; 0 票反对</small>
+            </p>
+            <p>
+            <div id="star_七画八画May1413170221" data-score="3.0"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_七画八画May1413170221').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>课程不错，准备结合CS229machine learning的讲义，认真学完。</p>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>1</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/11241701321">Drazzi</a>
+            <small>2013-05-13 21:25</small>
+            <small>1 票支持; 0 票反对</small>
+            </p>
+            <p>
+            <div id="star_DrazziMay1313212557" data-score="5.0"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_DrazziMay1313212557').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>老师讲得通俗易懂，连听一下午都不觉得枯燥！非常棒！</p>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>0</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/11845215855">蒋勇NLP</a>
+            <small>2013-05-13 12:47</small>
+            <small>0 票支持; 0 票反对</small>
+            </p>
+            <p>
+            <div id="star_蒋勇NLPMay1313124703" data-score="5.0"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_蒋勇NLPMay1313124703').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>目前在上，机器学习入门课程。。。</p>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>1</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/12104931705">52nlp</a>
+            <small>2013-05-13 12:32</small>
+            <small>1 票支持; 0 票反对</small>
+            </p>
+            <p>
+            <div id="star_52nlpMay1313123257" data-score="5.0"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_52nlpMay1313123257').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>同推荐Andrew Ng老师的这门机器学习课程，难度不高，非常适合入门，同时也可以在做作业的时候学习一下Octave</p>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>2</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/11655038093">yongsun</a>
+            <small>2013-05-13 01:35</small>
+            <small>2 票支持; 0 票反对</small>
+            </p>
+            <p>
+            <div id="star_yongsunMay1313013533" data-score="4.0"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_yongsunMay1313013533').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>浅显易懂，可谓零基础机器学习课程，入门首选！</p>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            
+            <a href="/login"><i class='icon-thumbs-up icon-large'></i></a>
+            
+            <p>1</p>
+            
+            <a href="/login"><i class='icon-thumbs-down
+                    icon-large'></i></a>
+            
+        </td>
+        <td>
+            <p>
+                <a href="/user/11829662477">王利锋Fandy</a>
+            <small>2013-05-12 15:18</small>
+            <small>1 票支持; 0 票反对</small>
+            </p>
+            <p>
+            <div id="star_王利锋FandyMay1213151831" data-score="5.0"></div>
+            <script>
+                $(document).ready(function(){
+                $('#star_王利锋FandyMay1213151831').raty( {
+                path: '/static/img',
+                readOnly: true,
+                score: function() {
+                return $(this).attr('data-score');
+                }
+                });
+                });
+            </script>
+            </p>
+            <p>入门级的好教程</p>
+        </td>
+    </tr>
+</table>
+
+        </article>
+    </div>
+    <div span4>
+        <h4>课程简介</h4><p>Learn about the most effective machine learning techniques, and gain practice implementing them and getting them to work for yourself.</p>
+        <h4>课程标签</h4>
+        
+        <a href="/tag/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>
+        
+        <a href="/tag/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8">机器学习入门</a>
+        
+        <a href="/tag/andrewng">AndrewNg</a>
+        
+        <a href="/tag/%E6%96%AF%E5%9D%A6%E7%A6%8F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">斯坦福机器学习</a>
+        
+        <a href="/tag/octave">Octave</a>
+        
+        <a href="/tag/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB">模式识别</a>
+        
+        <a href="/tag/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98">数据挖掘</a>
+        
+        </p>
+        <h4>202人关注该课程</h4>
+        
+        <a href="/user/11829662477"><img src=http://tp2.sinaimg.cn/1829662477/50/5660218407/1></a>
+        
+        <a href="/user/12104931705"><img src=http://tp2.sinaimg.cn/2104931705/50/5599477433/1></a>
+        
+        <a href="/user/11655038093"><img src=http://tp2.sinaimg.cn/1655038093/50/5644837216/1></a>
+        
+        <a href="/user/11661196902"><img src=http://tp3.sinaimg.cn/1661196902/50/5637286119/1></a>
+        
+        <a href="/user/11821310913"><img src=http://tp2.sinaimg.cn/1821310913/50/5650201458/1></a>
+        
+        <a href="/user/11845215855"><img src=http://tp4.sinaimg.cn/1845215855/50/5605747233/1></a>
+        
+        <a href="/user/12665139522"><img src=http://tp3.sinaimg.cn/2665139522/50/5656389962/1></a>
+        
+        <a href="/user/11952891925"><img src=http://tp2.sinaimg.cn/1952891925/50/1298946052/1></a>
+        
+        <a href="/user/11684784751"><img src=http://tp4.sinaimg.cn/1684784751/50/5636808816/1></a>
+        
+        <a href="/user/11566841942"><img src=http://tp3.sinaimg.cn/1566841942/50/39999646174/1></a>
+        
+        <a href="/user/11245643263"><img src=http://tp4.sinaimg.cn/1245643263/50/5597464106/1></a>
+        
+        <a href="/user/11837287505"><img src=http://tp2.sinaimg.cn/1837287505/50/5637026516/1></a>
+        
+        <a href="/user/11044670977"><img src=http://tp2.sinaimg.cn/1044670977/50/5623199790/1></a>
+        
+        <a href="/user/11646418703"><img src=http://tp4.sinaimg.cn/1646418703/50/40006481172/1></a>
+        
+        <a href="/user/11843821137"><img src=http://tp2.sinaimg.cn/1843821137/50/40012862488/1></a>
+        
+        <a href="/user/11958231132"><img src=http://tp1.sinaimg.cn/1958231132/50/5630283414/1></a>
+        
+        <a href="/user/11829908645"><img src=http://tp2.sinaimg.cn/1829908645/50/5621239759/0></a>
+        
+        <a href="/user/11846626683"><img src=http://tp4.sinaimg.cn/1846626683/50/40010272860/1></a>
+        
+        <a href="/user/11954974282"><img src=http://tp3.sinaimg.cn/1954974282/50/5646789536/1></a>
+        
+        <a href="/user/11971293175"><img src=http://tp4.sinaimg.cn/1971293175/50/22838407673/0></a>
+        
+        <a href="/user/11614706262"><img src=http://tp3.sinaimg.cn/1614706262/50/22834038469/1></a>
+        
+        <a href="/user/12468718581"><img src=http://tp2.sinaimg.cn/2468718581/50/0/1></a>
+        
+        <a href="/user/13369755644"><img src=http://tp1.sinaimg.cn/3369755644/50/5661949136/1></a>
+        
+        <a href="/user/11865757543"><img src=http://tp4.sinaimg.cn/1865757543/50/22837321880/1></a>
+        
+        <a href="/user/11944120292"><img src=http://tp1.sinaimg.cn/1944120292/50/5633682202/1></a>
+        
+        <a href="/user/12759432532"><img src=http://tp1.sinaimg.cn/2759432532/50/40018735181/1></a>
+        
+        <a href="/user/11777383264"><img src=http://tp1.sinaimg.cn/1777383264/50/40022294528/0></a>
+        
+        <a href="/user/11231525303"><img src=http://tp4.sinaimg.cn/1231525303/50/1294654465/1></a>
+        
+        <a href="/user/11213329132"><img src=http://tp1.sinaimg.cn/1213329132/50/5647002798/1></a>
+        
+        <a href="/user/11971336973"><img src=http://tp2.sinaimg.cn/1971336973/50/39999454390/1></a>
+        
+        <a href="/user/11848042935"><img src=http://tp4.sinaimg.cn/1848042935/50/5637926860/1></a>
+        
+        <a href="/user/11676256421"><img src=http://tp2.sinaimg.cn/1676256421/50/0/1></a>
+        
+        <a href="/user/12427565372"><img src=http://tp1.sinaimg.cn/2427565372/50/5652602093/0></a>
+        
+        <a href="/user/11646419781"><img src=http://tp2.sinaimg.cn/1646419781/50/5646217503/0></a>
+        
+        <a href="/user/11721985704"><img src=http://tp1.sinaimg.cn/1721985704/50/5638433349/1></a>
+        
+        <a href="/user/11764058821"><img src=http://tp2.sinaimg.cn/1764058821/50/0/1></a>
+        
+        <a href="/user/11734055997"><img src=http://tp2.sinaimg.cn/1734055997/50/5652365947/1></a>
+        
+        <a href="/user/11967705811"><img src=http://tp4.sinaimg.cn/1967705811/50/1297618751/0></a>
+        
+        <a href="/user/12708380284"><img src=http://tp1.sinaimg.cn/2708380284/50/5625032060/1></a>
+        
+        <a href="/user/11756576735"><img src=http://tp4.sinaimg.cn/1756576735/50/5649852883/0></a>
+        
+        <a href="/user/12483448980"><img src=http://tp1.sinaimg.cn/2483448980/50/0/0></a>
+        
+        <a href="/user/11830127347"><img src=http://tp4.sinaimg.cn/1830127347/50/5632404230/1></a>
+        
+        <a href="/user/11241701321"><img src=http://tp2.sinaimg.cn/1241701321/50/5630124537/1></a>
+        
+        <a href="/user/12098868362"><img src=http://tp3.sinaimg.cn/2098868362/50/5616822501/1></a>
+        
+        <a href="/user/11644700093"><img src=http://tp2.sinaimg.cn/1644700093/50/40003437492/1></a>
+        
+        <a href="/user/11645767494"><img src=http://tp3.sinaimg.cn/1645767494/50/5643813787/1></a>
+        
+        <a href="/user/11891088244"><img src=http://tp1.sinaimg.cn/1891088244/50/5658537250/1></a>
+        
+        <a href="/user/11751392562"><img src=http://tp3.sinaimg.cn/1751392562/50/1295442352/1></a>
+        
+        <a href="/user/11743023047"><img src=http://tp4.sinaimg.cn/1743023047/50/5642037482/1></a>
+        
+        <a href="/user/11784028131"><img src=http://tp4.sinaimg.cn/1784028131/50/1295109989/1></a>
+        
+        <a href="/user/11908599781"><img src=http://tp2.sinaimg.cn/1908599781/50/1298424803/1></a>
+        
+        <a href="/user/11879177040"><img src=http://tp1.sinaimg.cn/1879177040/50/5611296894/1></a>
+        
+        <a href="/user/11456820693"><img src=http://tp2.sinaimg.cn/1456820693/50/5609833805/1></a>
+        
+        <a href="/user/11918506507"><img src=http://tp4.sinaimg.cn/1918506507/50/5640144494/1></a>
+        
+        <a href="/user/11749202321"><img src=http://tp2.sinaimg.cn/1749202321/50/5637279491/1></a>
+        
+        <a href="/user/13190739060"><img src=http://tp1.sinaimg.cn/3190739060/50/40022621745/1></a>
+        
+        <a href="/user/11813886800"><img src=http://tp1.sinaimg.cn/1813886800/50/22835084517/0></a>
+        
+        <a href="/user/11572803810"><img src=http://tp3.sinaimg.cn/1572803810/50/1293351763/0></a>
+        
+        <a href="/user/11849537887"><img src=http://tp4.sinaimg.cn/1849537887/50/5631627334/1></a>
+        
+        <a href="/user/11634752545"><img src=http://tp2.sinaimg.cn/1634752545/50/5620569789/1></a>
+        
+        <a href="/user/12609827340"><img src=http://tp1.sinaimg.cn/2609827340/50/5649172615/1></a>
+        
+        <a href="/user/11657319255"><img src=http://tp4.sinaimg.cn/1657319255/50/40017774806/0></a>
+        
+        <a href="/user/12461788734"><img src=http://tp3.sinaimg.cn/2461788734/50/40018908577/1></a>
+        
+        <a href="/user/11943957265"><img src=http://tp2.sinaimg.cn/1943957265/50/40022387342/1></a>
+        
+        <a href="/user/11900260373"><img src=http://tp2.sinaimg.cn/1900260373/50/22839274981/1></a>
+        
+        <a href="/user/11855373554"><img src=http://tp3.sinaimg.cn/1855373554/50/40005418705/0></a>
+        
+        <a href="/user/11073084013"><img src=http://tp2.sinaimg.cn/1073084013/50/5635962260/1></a>
+        
+        <a href="/user/11785748853"><img src=http://tp2.sinaimg.cn/1785748853/50/40004237873/1></a>
+        
+        <a href="/user/11573459941"><img src=http://tp2.sinaimg.cn/1573459941/50/5631509093/1></a>
+        
+        <a href="/user/11615043514"><img src=http://tp3.sinaimg.cn/1615043514/50/5662332440/1></a>
+        
+        <a href="/user/11914152325"><img src=http://tp2.sinaimg.cn/1914152325/50/5615967508/1></a>
+        
+        <a href="/user/11726133934"><img src=http://tp3.sinaimg.cn/1726133934/50/40013617787/1></a>
+        
+        <a href="/user/12703427641"><img src=http://tp2.sinaimg.cn/2703427641/50/5629427885/1></a>
+        
+        <a href="/user/11957760340"><img src=http://tp1.sinaimg.cn/1957760340/50/5632629872/1></a>
+        
+        <a href="/user/12726085173"><img src=http://tp2.sinaimg.cn/2726085173/50/40013058295/1></a>
+        
+        <a href="/user/12536116592"><img src=http://tp1.sinaimg.cn/2536116592/50/22836957102/1></a>
+        
+        <a href="/user/12701534974"><img src=http://tp3.sinaimg.cn/2701534974/50/0/1></a>
+        
+        <a href="/user/12320743603"><img src=http://tp4.sinaimg.cn/2320743603/50/22834970698/1></a>
+        
+        <a href="/user/13454606002"><img src=http://tp3.sinaimg.cn/3454606002/50/40023030864/1></a>
+        
+        <a href="/user/11699260442"><img src=http://tp3.sinaimg.cn/1699260442/50/5623818666/1></a>
+        
+        <a href="/user/11685998490"><img src=http://tp3.sinaimg.cn/1685998490/50/5658737504/1></a>
+        
+        <a href="/user/12010421101"><img src=http://tp2.sinaimg.cn/2010421101/50/40013992014/1></a>
+        
+        <a href="/user/11769160205"><img src=http://tp2.sinaimg.cn/1769160205/50/5650176079/0></a>
+        
+        <a href="/user/11069290177"><img src=http://tp2.sinaimg.cn/1069290177/50/40022909250/1></a>
+        
+        <a href="/user/12691717041"><img src=http://tp2.sinaimg.cn/2691717041/50/5629298063/1></a>
+        
+        <a href="/user/11663220407"><img src=http://tp4.sinaimg.cn/1663220407/50/1283958500/1></a>
+        
+        <a href="/user/12183302203"><img src=http://tp4.sinaimg.cn/2183302203/50/5624411119/1></a>
+        
+        <a href="/user/11896870354"><img src=http://tp3.sinaimg.cn/1896870354/50/5626358686/1></a>
+        
+        <a href="/user/11976566237"><img src=http://tp2.sinaimg.cn/1976566237/50/22838956136/0></a>
+        
+        <a href="/user/11736911165"><img src=http://tp2.sinaimg.cn/1736911165/50/1301288002/1></a>
+        
+        <a href="/user/11676848694"><img src=http://tp3.sinaimg.cn/1676848694/50/5616345099/1></a>
+        
+        <a href="/user/11272082692"><img src=http://tp1.sinaimg.cn/1272082692/50/5626046550/1></a>
+        
+        <a href="/user/12481611592"><img src=http://tp1.sinaimg.cn/2481611592/50/5614098076/1></a>
+        
+        <a href="/user/11630044955"><img src=http://tp4.sinaimg.cn/1630044955/50/1298349898/1></a>
+        
+        <a href="/user/11742589007"><img src=http://tp4.sinaimg.cn/1742589007/50/5660488746/1></a>
+        
+        <a href="/user/11651810521"><img src=http://tp2.sinaimg.cn/1651810521/50/40016840200/1></a>
+        
+        <a href="/user/12064957163"><img src=http://tp4.sinaimg.cn/2064957163/50/5627710317/1></a>
+        
+        <a href="/user/12134508032"><img src=http://tp1.sinaimg.cn/2134508032/50/5608059769/1></a>
+        
+        <a href="/user/11681902484"><img src=http://tp1.sinaimg.cn/1681902484/50/5607852376/1></a>
+        
+        <a href="/user/11875402351"><img src=http://tp4.sinaimg.cn/1875402351/50/5626504374/0></a>
+        
+        <a href="/user/11748407695"><img src=http://tp4.sinaimg.cn/1748407695/50/5654265843/1></a>
+        
+        <a href="/user/11867338235"><img src=http://tp4.sinaimg.cn/1867338235/50/1299133594/1></a>
+        
+        <a href="/user/11793011670"><img src=http://tp3.sinaimg.cn/1793011670/50/40015297892/1></a>
+        
+        <a href="/user/11686596902"><img src=http://tp3.sinaimg.cn/1686596902/50/5634195541/1></a>
+        
+        <a href="/user/12409725783"><img src=http://tp4.sinaimg.cn/2409725783/50/5622899740/1></a>
+        
+        <a href="/user/12294395253"><img src=http://tp2.sinaimg.cn/2294395253/50/5643604571/1></a>
+        
+        <a href="/user/11821846011"><img src=http://tp4.sinaimg.cn/1821846011/50/5647310604/1></a>
+        
+        <a href="/user/11600769002"><img src=http://tp3.sinaimg.cn/1600769002/50/40017284802/1></a>
+        
+        <a href="/user/11688161242"><img src=http://tp3.sinaimg.cn/1688161242/50/5649813731/1></a>
+        
+        <a href="/user/12867438723"><img src=http://tp4.sinaimg.cn/2867438723/50/22821316836/1></a>
+        
+        <a href="/user/11910166511"><img src=http://tp4.sinaimg.cn/1910166511/50/40009124859/1></a>
+        
+        <a href="/user/11774840945"><img src=http://tp2.sinaimg.cn/1774840945/50/40002730377/1></a>
+        
+        <a href="/user/12158268614"><img src=http://tp3.sinaimg.cn/2158268614/50/5602236568/1></a>
+        
+        <a href="/user/12322428375"><img src=http://tp4.sinaimg.cn/2322428375/50/22825387929/1></a>
+        
+        <a href="/user/11748945643"><img src=http://tp4.sinaimg.cn/1748945643/50/5652765293/1></a>
+        
+        <a href="/user/11847076791"><img src=http://tp4.sinaimg.cn/1847076791/50/5619067408/1></a>
+        
+        <a href="/user/11251302467"><img src=http://tp4.sinaimg.cn/1251302467/50/5655381732/0></a>
+        
+        <a href="/user/11398961525"><img src=http://tp2.sinaimg.cn/1398961525/50/5615675015/1></a>
+        
+        <a href="/user/11174305851"><img src=http://tp4.sinaimg.cn/1174305851/50/22822390120/1></a>
+        
+        <a href="/user/11421417172"><img src=http://tp1.sinaimg.cn/1421417172/50/22841518537/1></a>
+        
+        <a href="/user/11812031004"><img src=http://tp1.sinaimg.cn/1812031004/50/40008467436/1></a>
+        
+        <a href="/user/12654963531"><img src=http://tp4.sinaimg.cn/2654963531/50/5654216553/1></a>
+        
+        <a href="/user/12364972707"><img src=http://tp4.sinaimg.cn/2364972707/50/22842385239/1></a>
+        
+        <a href="/user/11914864954"><img src=http://tp3.sinaimg.cn/1914864954/50/5628509148/1></a>
+        
+        <a href="/user/12778919245"><img src=http://tp2.sinaimg.cn/2778919245/50/5644138097/1></a>
+        
+        <a href="/user/11923778745"><img src=http://tp2.sinaimg.cn/1923778745/50/1295581840/1></a>
+        
+        <a href="/user/12098910371"><img src=http://tp4.sinaimg.cn/2098910371/50/5650282649/1></a>
+        
+        <a href="/user/12182788730"><img src=http://tp3.sinaimg.cn/2182788730/50/22842599608/1></a>
+        
+        <a href="/user/11581286357"><img src=http://tp2.sinaimg.cn/1581286357/50/40001425360/1></a>
+        
+        <a href="/user/11824557225"><img src=http://tp2.sinaimg.cn/1824557225/50/5661856695/1></a>
+        
+        <a href="/user/12141944647"><img src=http://tp4.sinaimg.cn/2141944647/50/5602769404/1></a>
+        
+        <a href="/user/11866655835"><img src=http://tp4.sinaimg.cn/1866655835/50/5661077362/1></a>
+        
+        <a href="/user/12147559171"><img src=http://tp4.sinaimg.cn/2147559171/50/5644039971/1></a>
+        
+        <a href="/user/12127789014"><img src=http://tp3.sinaimg.cn/2127789014/50/5657945437/1></a>
+        
+        <a href="/user/11233650930"><img src=http://tp3.sinaimg.cn/1233650930/50/5633647139/1></a>
+        
+        <a href="/user/11308909441"><img src=http://tp2.sinaimg.cn/1308909441/50/5617118031/1></a>
+        
+        <a href="/user/11179534060"><img src=http://tp1.sinaimg.cn/1179534060/50/40015359363/1></a>
+        
+        <a href="/user/12041092172"><img src=http://tp1.sinaimg.cn/2041092172/50/40023067964/1></a>
+        
+        <a href="/user/12443613322"><img src=http://tp3.sinaimg.cn/2443613322/50/39999535009/1></a>
+        
+        <a href="/user/11704108367"><img src=http://tp4.sinaimg.cn/1704108367/50/5626150646/1></a>
+        
+        <a href="/user/11241941920"><img src=http://tp1.sinaimg.cn/1241941920/50/5631711669/0></a>
+        
+        <a href="/user/11272017243"><img src=http://tp4.sinaimg.cn/1272017243/50/40005244134/1></a>
+        
+        <a href="/user/12117305325"><img src=http://tp2.sinaimg.cn/2117305325/50/40017374169/1></a>
+        
+        <a href="/user/11381496360"><img src=http://tp1.sinaimg.cn/1381496360/50/1270292526/1></a>
+        
+        <a href="/user/11746905902"><img src=http://tp3.sinaimg.cn/1746905902/50/5630240105/1></a>
+        
+        <a href="/user/11830319382"><img src=http://tp3.sinaimg.cn/1830319382/50/40017081474/1></a>
+        
+        <a href="/user/11656061502"><img src=http://tp3.sinaimg.cn/1656061502/50/5605109377/1></a>
+        
+        <a href="/user/11736482432"><img src=http://tp1.sinaimg.cn/1736482432/50/22831103682/1></a>
+        
+        <a href="/user/11215135960"><img src=http://tp1.sinaimg.cn/1215135960/50/0/1></a>
+        
+        <a href="/user/12673570090"><img src=http://tp3.sinaimg.cn/2673570090/50/0/1></a>
+        
+        <a href="/user/11820301067"><img src=http://tp4.sinaimg.cn/1820301067/50/40005516141/1></a>
+        
+        <a href="/user/11586481425"><img src=http://tp2.sinaimg.cn/1586481425/50/5605410321/1></a>
+        
+        <a href="/user/11567437245"><img src=http://tp2.sinaimg.cn/1567437245/50/0/1></a>
+        
+        <a href="/user/11629718223"><img src=http://tp4.sinaimg.cn/1629718223/50/5649389388/1></a>
+        
+        <a href="/user/11845328617"><img src=http://tp2.sinaimg.cn/1845328617/50/5664973354/1></a>
+        
+        <a href="/user/11270188702"><img src=http://tp3.sinaimg.cn/1270188702/50/1293571157/1></a>
+        
+        <a href="/user/11669866490"><img src=http://tp3.sinaimg.cn/1669866490/50/40016827518/1></a>
+        
+        <a href="/user/11828273514"><img src=http://tp3.sinaimg.cn/1828273514/50/22840443248/1></a>
+        
+        <a href="/user/11906038033"><img src=http://tp2.sinaimg.cn/1906038033/50/39997939949/1></a>
+        
+        <a href="/user/11691029061"><img src=http://tp2.sinaimg.cn/1691029061/50/5607338006/1></a>
+        
+        <a href="/user/12072912615"><img src=http://tp4.sinaimg.cn/2072912615/50/0/1></a>
+        
+        <a href="/user/12684726573"><img src=http://tp2.sinaimg.cn/2684726573/50/22832413620/1></a>
+        
+        <a href="/user/11679412952"><img src=http://tp1.sinaimg.cn/1679412952/50/40021516083/1></a>
+        
+        <a href="/user/11621117883"><img src=http://tp4.sinaimg.cn/1621117883/50/5658049470/0></a>
+        
+        <a href="/user/11584285714"><img src=http://tp3.sinaimg.cn/1584285714/50/5640738555/1></a>
+        
+        <a href="/user/11167679155"><img src=http://tp4.sinaimg.cn/1167679155/50/5639413017/1></a>
+        
+        <a href="/user/12005242491"><img src=http://tp4.sinaimg.cn/2005242491/50/1299210724/1></a>
+        
+        <a href="/user/12172388503"><img src=http://tp4.sinaimg.cn/2172388503/50/5607438776/1></a>
+        
+        <a href="/user/13080767595"><img src=http://tp4.sinaimg.cn/3080767595/50/0/0></a>
+        
+        <a href="/user/13032425515"><img src=http://tp4.sinaimg.cn/3032425515/50/40004494046/1></a>
+        
+        <a href="/user/12380893185"><img src=http://tp2.sinaimg.cn/2380893185/50/5658034673/0></a>
+        
+        <a href="/user/11658771391"><img src=http://tp4.sinaimg.cn/1658771391/50/1260164758/1></a>
+        
+        <a href="/user/12422065037"><img src=http://tp2.sinaimg.cn/2422065037/50/40007016117/1></a>
+        
+        <a href="/user/11760035201"><img src=http://tp2.sinaimg.cn/1760035201/50/5642664180/1></a>
+        
+        <a href="/user/12099473611"><img src=http://tp4.sinaimg.cn/2099473611/50/22839272099/1></a>
+        
+        <a href="/user/11714208271"><img src=http://tp4.sinaimg.cn/1714208271/50/5642479164/0></a>
+        
+        <a href="/user/11905400821"><img src=http://tp2.sinaimg.cn/1905400821/50/5635644246/0></a>
+        
+        <a href="/user/12007342753"><img src=http://tp2.sinaimg.cn/2007342753/50/5632835978/1></a>
+        
+        <a href="/user/11815197305"><img src=http://tp2.sinaimg.cn/1815197305/50/5657190947/1></a>
+        
+        <a href="/user/12668381327"><img src=http://tp4.sinaimg.cn/2668381327/50/40009601149/1></a>
+        
+        <a href="/user/11910786747"><img src=http://tp4.sinaimg.cn/1910786747/50/5623512191/1></a>
+        
+        <a href="/user/11796651332"><img src=http://tp1.sinaimg.cn/1796651332/50/5662979521/1></a>
+        
+        <a href="/user/11608464037"><img src=http://tp2.sinaimg.cn/1608464037/50/22842988755/1></a>
+        
+        <a href="/user/11824537894"><img src=http://tp3.sinaimg.cn/1824537894/50/40010889163/1></a>
+        
+        <a href="/user/12259177880"><img src=http://tp1.sinaimg.cn/2259177880/50/0/1></a>
+        
+        <a href="/user/11470001140"><img src=http://tp1.sinaimg.cn/1470001140/50/5657023689/1></a>
+        
+        <a href="/user/11890577554"><img src=http://tp3.sinaimg.cn/1890577554/50/5653360452/1></a>
+        
+        <a href="/user/11810080664"><img src=http://tp1.sinaimg.cn/1810080664/50/5662216743/1></a>
+        
+        <a href="/user/12046586722"><img src=http://tp3.sinaimg.cn/2046586722/50/5600994190/1></a>
+        
+        <a href="/user/12096926664"><img src=http://tp1.sinaimg.cn/2096926664/50/5640865579/1></a>
+        
+        <a href="/user/11763911845"><img src=http://tp2.sinaimg.cn/1763911845/50/5610082031/1></a>
+        
+        <a href="/user/11242569167"><img src=http://tp4.sinaimg.cn/1242569167/50/5643880685/1></a>
+        
+        <a href="/user/11689328440"><img src=http://tp1.sinaimg.cn/1689328440/50/5628823656/1></a>
+        
+        <a href="/user/11363142032"><img src=http://tp1.sinaimg.cn/1363142032/50/1283422403/1></a>
+        
+        <a href="/user/11732662733"><img src=http://tp2.sinaimg.cn/1732662733/50/40022124675/1></a>
+        
+        <a href="/user/11971217467"><img src=http://tp4.sinaimg.cn/1971217467/50/5599132493/1></a>
+        
+        <a href="/user/12484863137"><img src=http://tp2.sinaimg.cn/2484863137/50/40005221674/1></a>
+        
+        <a href="/user/11785692303"><img src=http://tp4.sinaimg.cn/1785692303/50/1298777199/1></a>
+        
+        <a href="/user/11285456292"><img src=http://tp1.sinaimg.cn/1285456292/50/0/1></a>
+        
+        <a href="/user/11797037781"><img src=http://tp2.sinaimg.cn/1797037781/50/5642924297/1></a>
+        
+        <a href="/user/11633259291"><img src=http://tp4.sinaimg.cn/1633259291/50/1297395827/1></a>
+        
+        <a href="/user/11877223905"><img src=http://tp2.sinaimg.cn/1877223905/50/40003645102/1></a>
+        
+        <h4>主题相关的课程</h4>
+        
+        <p><a href="/machine-learning-coursera-machlearning-university-of-washington">Machine Learning (Coursera) </a>
+        3 个评论
+        
+        <a href="/login">关注</a>
+        
+        </p>
+        
+        <p><a href="/fundamentals-of-online-education-planning-and-application-coursera-foe-georgia-institute-of-technology">Fundamentals of Online Education: Planning and Application (Coursera) </a>
+        0 个评论
+        
+        <a href="/login">关注</a>
+        
+        </p>
+        
+        <p><a href="/web-development-udacity-cs253-udacity-self">Web Development (Udacity) </a>
+        3 个评论
+        
+        <a href="/login">关注</a>
+        
+        </p>
+        
+        <p><a href="/introduction-to-systematic-program-design-part-1-coursera-programdesign-the-university-of-british-columbia">Introduction to Systematic Program Design - Part 1 (Coursera) </a>
+        2 个评论
+        
+        <a href="/login">关注</a>
+        
+        </p>
+        
+        <p><a href="/artificial-intelligence-edx-edx_cs188-1x-university-of-california-berkeley">CS188.1x: Artificial Intelligence (edX) </a>
+        5 个评论
+        
+        <a href="/login">关注</a>
+        
+        </p>
+        
+        <p><a href="/neural-networks-for-machine-learning-coursera-neuralnets-university-of-toronto">Neural Networks for Machine Learning (Coursera) </a>
+        3 个评论
+        
+        <a href="/login">关注</a>
+        
+        </p>
+        
+        <p><a href="/common-core-in-action-literacy-across-content-areas-coursera-ccss-literacy1-new-teacher-center">Common Core in Action: Literacy Across Content Areas (Coursera) </a>
+        0 个评论
+        
+        <a href="/login">关注</a>
+        
+        </p>
+        
+        <p><a href="/integrating-engineering-into-your-science-classroom-coursera-teachengineering-exploratorium">Integrating Engineering Into Your Science Classroom (Coursera) </a>
+        0 个评论
+        
+        <a href="/login">关注</a>
+        
+        </p>
+        
+        <p><a href="/designing-and-executing-information-security-strategies-coursera-infosec-university-of-washington">Designing and Executing Information Security Strategies (Coursera) </a>
+        0 个评论
+        
+        <a href="/login">关注</a>
+        
+        </p>
+        
+        <p><a href="/take-your-medicine-the-impact-of-drug-development-edx-ut-4-01x-utaustinx">Take Your Medicine - The Impact of Drug Development (edX) </a>
+        0 个评论
+        
+        <a href="/login">关注</a>
+        
+        </p>
+        
+    </div>
+</div>
+
+                </div>
+            </div>
+            <div style="height:30px"></div>
+            <footer>
+<p align="center">微博联系或关注我们 <a href="http://weibo.com/kechengtupu">@课程图谱</a></p>
+<p align="center">欢迎公开课爱好者加入我们的课程图谱交流群：244689946</p>
+<p align="center">@ 2013 <a href="http://coursegraph.com">课程图谱</a> 京ICP备13015120号</p>
+</footer>
+        </div>
+<!-- Piwik -->
+<script type="text/javascript"> 
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://42.96.171.40/piwik//";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 1]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
+    g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+
+</script>
+<noscript><p><img src="http://42.96.171.40/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+    </body>
+</html>

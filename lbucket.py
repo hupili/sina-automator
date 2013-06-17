@@ -101,6 +101,8 @@ class RateLimitQueue(object):
             ret[name]['rate'] = bucket.fill_rate
         return ret
 
+    def length(self):
+        return len(self._tasks)
 
 class RLQTask(object):
     """docstring for RLQTask"""
