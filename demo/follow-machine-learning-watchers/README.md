@@ -80,3 +80,11 @@ on SinaWeibo.
   }
 ]
 ```
+
+## About WeiboAutomator
+
+   * See the ROOT README for more info.
+   * The rate limit function is implemented using a leaky bucket.
+   The leaky bucket configuraiton can be found in `SINA_BUCKETS` in `wauto.py`.
+   Official reference for [test-stage app](http://open.weibo.com/wiki/Rate-limiting).
+   Change to other values that suit your app level.
